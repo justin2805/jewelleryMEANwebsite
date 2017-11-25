@@ -1,0 +1,22 @@
+{
+  "name": "s_aireni",
+  "version": "1.0.0",
+  "description": "jewellery and accessories website server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://justin2805@bitbucket.org/justin2805/s_aireni_jewellers_accessories.git"
+  },
+  "author": "Justin",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/justin2805/s_aireni_jewellers_accessories#readme",
+  "dependencies": {
+    "express":"*",
+    "body-parser": "*",
+    "ejs":"*",
+    "mongodb":"*"
+  }
+}
