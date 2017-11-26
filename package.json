@@ -17,6 +17,7 @@
     "express":"*",
     "body-parser": "*",
     "ejs":"*",
-    "mongodb":"*"
+    "mongodb":"*",
+    "multer":"*"
   }
 }
