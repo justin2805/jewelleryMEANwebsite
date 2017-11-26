@@ -27,3 +27,21 @@ This README would normally document whatever steps are necessary to get your app
 
 * Repo owner or admin
 * Other community or team contact
+
+
+
+other accessories
+
+customized covers
+covers and cases
+
+jew
+
+bangles
+homemade customized jew
+normal
+
+
+
+image 
+desc
