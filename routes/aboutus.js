@@ -5,6 +5,7 @@ var assert = require('assert');
 
 var url = 'mongodb://localhost:27017/saireni';
 
+// to get the About Us data for the user-
 router.get('/aboutus',function(req,res,next){
     
     MongoClient.connect(url,function(err,db){
@@ -33,6 +34,7 @@ router.get('/aboutus',function(req,res,next){
 
 });
 
+// to upload the About Us data
 router.post('/aboutus',function(req,res,next){
     var aboutus = req.body;
     if (!aboutus.name || !aboutus.description){

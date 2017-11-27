@@ -5,7 +5,7 @@ var assert = require("assert");
 var path = require('path');
 
 var aboutus = require('./routes/aboutus');
-// var home = require('./routes/home');
+var home = require('./routes/home');
 // var products = require('./routes/products');
 
 var port = 3000;
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 // route
 app.use('/',aboutus);
-// app.use('/',home);
+app.use('/',home);
 // app.use('/',products);
 
 
