@@ -14,11 +14,11 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/justin2805/s_aireni_jewellers_accessories#readme",
   "dependencies": {
-    "express":"*",
+    "express": "*",
     "body-parser": "*",
-    "ejs":"*",
-    "mongodb":"*",
-    "multer":"*",
-    "file-type":"*"
+    "ejs": "*",
+    "mongodb": "*",
+    "multer": "*",
+    "file-type": "*"
   }
 }

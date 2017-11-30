@@ -39,6 +39,14 @@ router.get('/home/:imagename',function(req,res,next){
 router.post('/home',(req,res) =>{
     console.log('connected to mongoclient at:: POST:: '+url+'/home');    
     
+    var base64String = req.body.base64String;
+    var ext = base64String.split(';')[0].match(/jpeg|png|gif|jpg/)[0];
+    var data = base64String.replace(/^data:image\/\w+;base64,/,"");
+    var buf = new Buffer(base64String,'base64');
+    fs.writeFile('image.'+ext,buf);
+
+
+
     // if(req.file == null){
     //     res.status = 400;
     //     res.json({
@@ -47,17 +55,17 @@ router.post('/home',(req,res) =>{
     // } else {
         // MongoClient.connect(url,function(err,db){
 
-        console.log('point 1')
-        upload(req,res,function(err){
-        if(err){
-            res.status = 400;
-            res.json({
-                  "error" : err.message});
-        } else {
-            let path = `/uploads/${req.file.filename}`
-            res.status(200).json({message:'Image uploaded successfully!',path:path});
-        }
-    })
+    //     console.log('point 1')
+    //     upload(req,res,function(err){
+    //     if(err){
+    //         res.status = 400;
+    //         res.json({
+    //               "error" : err.message});
+    //     } else {
+    //         let path = `/uploads/${req.file.filename}`
+    //         res.status(200).json({message:'Image uploaded successfully!',path:path});
+    //     }
+    // })
 // })
 // }
     
