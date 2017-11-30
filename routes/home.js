@@ -5,82 +5,70 @@ var express = require('express'),
     multer = require('multer'),
     util = require('util'),
     fs = require('fs'),
-    fileType = require('file-type'),
     uuid = require('uuid'),
-    upload = multer({
-        dest:'./uploads/',
-        limits:{fileSize:10000000,files:1},
-        fileFilter:(req,file,callback) => {
-            if(!file.originalname.match(/\.(jpg|jpeg)$/)){
-                return callback(new Error('Only images are allowed !',false))
-            }
-            callback(null,true);
-        }
-    }).single('image');
+    path = require('path');
 
 var url = 'mongodb://localhost:27017/saireni';
 
 
-router.get('/home/:imagename',function(req,res,next){
-    console.log('connected to mongoclient at:: GET:: '+url+'/home');
-    // res.status(400);
-    // res.json({
-    //     "error":"No data"
-    // })
-
-    let imagename = req.params.imagename;
-    let imagepath = __dirname+'/../uploads/'+imagename;
-    let image =  fs.readFileSync(imagepath);
-    let mime = fileType(image).mime;
-
-    res.writeHead(200, {'Content-Type':mime});
-    res.end(image,'binary')
+router.get('/home', function (req, res, next) {
+    MongoClient.connect(url,function(err,db){
+        assert.equal(null,err);   
+        console.log('connected to mongoclient at:: GET:: ' + url + '/home');
+        db.collection('home').find().toArray(function(err,docs){
+            assert.equal(null,err);
+            if(docs!=null && docs.length==0){
+                res.status(400);
+                res.json({
+                    "error": "No Data"
+                })
+                return;
+            }
+            docs.forEach(function(doc){
+                console.log(doc.imageFileNamePath);
+            });
+            res.send(docs);
+        });
+    });
 });
 
-router.post('/home',(req,res) =>{
-    console.log('connected to mongoclient at:: POST:: '+url+'/home');    
-    
-    var base64String = req.body.base64String;
-    var ext = base64String.split(';')[0].match(/jpeg|png|gif|jpg/)[0];
-    var data = base64String.replace(/^data:image\/\w+;base64,/,"");
-    var buf = new Buffer(base64String,'base64');
-    var imageFileName = uuid.v4()+'.'+ext;
-    fs.writeFile('./uploads/'+imageFileName,buf,(error)=>{
-        if (error) throw error;
-        console.log("Created file of name: "+imageFileName);
-        res.status = 200;
+router.post('/home', (req, res) => {
+    console.log('connected to mongoclient at:: POST:: ' + url + '/home');
+
+    var homeData = req.body;
+    if (!homeData.base64String) {
+        res.status = 400;
         res.json({
-            "success" : "Image uploaded successfully!"
+            "error": "Bad data"
         })
-    });
+    } else {
+        var base64String = homeData.base64String;
+        var ext = base64String.split(';')[0].match(/jpeg|png|gif|jpg/)[0];
+        var data = base64String.replace(/^data:image\/\w+;base64,/, "");
+        var buf = new Buffer(data, 'base64');
+        var relativeImageFilePath = './uploads/' + uuid.v4() + '.' + ext;
+        let completeImgFilePath = path.join(__dirname + '/../uploads/' + uuid.v4() + '.' + ext);
+        fs.writeFile(relativeImageFilePath, buf, (error) => {
+            if (error) {
+                console.log(error);
+                throw error;
+            }
+            MongoClient.connect(url, function (err, db) {
+                assert.equal(null, err);
+                console.log("connected to MongoClient at:: POST:: " + url + "/home");
 
-
-
-    // if(req.file == null){
-    //     res.status = 400;
-    //     res.json({
-    //         "error" : "Bad data0"
-    //     })
-    // } else {
-        // MongoClient.connect(url,function(err,db){
-
-    //     console.log('point 1')
-    //     upload(req,res,function(err){
-    //     if(err){
-    //         res.status = 400;
-    //         res.json({
-    //               "error" : err.message});
-    //     } else {
-    //         let path = `/uploads/${req.file.filename}`
-    //         res.status(200).json({message:'Image uploaded successfully!',path:path});
-    //     }
-    // })
-// })
-// }
-    
-    
-    
-    
+                db.collection('home').insertOne({
+                    "imageFileNamePath": completeImgFilePath
+                }, function (err, res) {
+                    assert.equal(null, err);
+                });
+                res.status = 200;
+                res.json({
+                    "success": "Image uploaded successfully!"
+                })
+            });
+        });
+    }
 });
 
 module.exports = router;
