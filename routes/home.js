@@ -6,6 +6,7 @@ var express = require('express'),
     util = require('util'),
     fs = require('fs'),
     fileType = require('file-type'),
+    uuid = require('uuid'),
     upload = multer({
         dest:'./uploads/',
         limits:{fileSize:10000000,files:1},
@@ -43,7 +44,15 @@ router.post('/home',(req,res) =>{
     var ext = base64String.split(';')[0].match(/jpeg|png|gif|jpg/)[0];
     var data = base64String.replace(/^data:image\/\w+;base64,/,"");
     var buf = new Buffer(base64String,'base64');
-    fs.writeFile('image.'+ext,buf);
+    var imageFileName = uuid.v4()+'.'+ext;
+    fs.writeFile('./uploads/'+imageFileName,buf,(error)=>{
+        if (error) throw error;
+        console.log("Created file of name: "+imageFileName);
+        res.status = 200;
+        res.json({
+            "success" : "Image uploaded successfully!"
+        })
+    });
 
 
 
