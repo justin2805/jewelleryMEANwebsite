@@ -44,6 +44,6 @@ normal
 
 
 image 
-desc
+desc - cost, available, desc, prod_qual, prod_safety_info, prod_legal disclaimer
 
-https://gist.github.com/madhums/e749dca107e26d72b64d
+https://gist.github.com/madhums/e749dca107e26d72b64dh
