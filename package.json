@@ -17,9 +17,10 @@
     "body-parser": "*",
     "ejs": "*",
     "express": "*",
-    "file-type": "*",
-    "mongodb": "*",
-    "multer": "*",
+    "formidable": "^1.1.1",
+    "mongoose": "^4.13.7",
+    "mongoose-auto-increment": "^5.0.1",
+    "mongoose-unique-validator": "^1.0.6",
     "uuid": "*"
   }
 }
