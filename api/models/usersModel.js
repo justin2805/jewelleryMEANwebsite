@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var uniqueValidator = require('mongoose-unique-validator');
 var autoincrement = require('mongoose-auto-increment');
+var bcrypt = require('bcrypt');
 
 var connection = mongoose.createConnection("mongodb://localhost/saireni");
 autoincrement.initialize(connection);
@@ -26,6 +27,10 @@ var usersSchema = new Schema({
     type: String,
     required: true
   },
+  hash_password: {
+    type: String,
+    required: true
+  },
   usertype: {
     type: String,
     enum: ['ADMIN', 'USER'],
@@ -38,6 +43,9 @@ var usersSchema = new Schema({
 });
 
 usersSchema.plugin(uniqueValidator);
-usersSchema.plugin(autoincrement.plugin,{model : 'Users', field:'userId', startAt: 1000});
+usersSchema.plugin(autoincrement.plugin, { model: 'Users', field: 'userId', startAt: 1000 });
+usersSchema.methods.comparePassword = function (password) {
+  return bcrypt.compareSync(password, this.hash_password);
+}
 
 module.exports = mongoose.model('Users', usersSchema);
