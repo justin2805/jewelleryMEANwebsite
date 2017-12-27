@@ -16,20 +16,11 @@ exports.registerUser = function (req, res) {
     new_user.hash_password = bcrypt.hashSync(req.body.password, 10);
     new_user.save(function (err, result) {
         if (err) {
-            res.send(err);
-            // return res.status(500).send(err);
+            res.status(500).json({ message: "Internal server error" });
+            console.log(err);
         }
-        // if (result.insertedId) {
-        //     res.status = 201;
-        //     res.json({
-        //         "status": "Success"
-        //     })
-        // }
         result.hash_password = undefined;
-        res.status = 200;
-        res.json({
-            "status": "success"
-        })
+        res.status(200).json({ message: "success" });
     });
 };
 
@@ -39,15 +30,16 @@ exports.sign_in = function (req, res) {
     var query = { email: req.body.email };
     Users.findOne(query, function (err, user) {
         if (err) {
-            res.send(err);
+            res.status(500).json({ message: "Internal server error" });
+            console.log(err);
         }
         if (!user) {
-            res.status(401).json({ "status": "Authentication failed. User not found." });
+            res.status(401).json({ message: "Authentication failed. User not found." });
         } else if (user) {
             if (!user.comparePassword(req.body.password)) {
-                res.status(401).json({ "status": "Authentication failed. Wrong password" });
+                res.status(401).json({ message: "Authentication failed. Wrong password!" });
             } else {
-                return res.json({
+                return res.status(200).json({
                     token: jwt.sign(
                         { email: user.email, name: user.name, userId: user.userId },
                         "SagarAirenisSecretKey")

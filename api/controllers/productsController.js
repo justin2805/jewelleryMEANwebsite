@@ -24,15 +24,13 @@ exports.fetchAllProducts = function (req, res) {
     var projection = '-_id name productId cost productType product_imagePaths';
     Products.find(query, projection, function (err, products) {
         if (err) {
-            res.send(err);
+            res.status(500).json({ message: "Internal server error" });
+            console.log(err);
         }
         if (products != null && products.length == 0) {
-            res.status(400);
-            res.json({
-                "status": "No data"
-            })
+            res.status(204).json({ message: "No Content" });
         }
-        res.json(products);
+        res.status(200).json(products);
     })
 };
 
@@ -70,12 +68,10 @@ exports.uploadProducts = function (req, res) {
         }
         new_product.save(function (err, product) {
             if (err) {
-                res.send(err);
+                res.status(500).json({ message: "Internal server error" });
+                console.log(err);
             }
-            res.status = 200;
-            res.json({
-                "status": "success"
-            });
+            res.status(201).json({ message: "success" });
         });
     });
 };
@@ -90,9 +86,10 @@ exports.uploadProducts = function (req, res) {
 exports.fetchSingleProduct = function (req, res) {
     Products.findOne({ 'productId': req.params.productId }, '-_id', function (err, product) {
         if (err) {
-            res.send(err);
+            res.status(500).json({ message: "Internal server error" });
+            console.log(err);
         }
-        res.json(product);
+        res.status(200).json(product);
     });
 };
 
@@ -126,7 +123,8 @@ exports.updateProduct = function (req, res) {
         // return old object after successful query completion for use in fs.unlink
         Products.findOneAndUpdate(query, fields, { new: false }, function (err, product) {
             if (err) {
-                res.send(err);
+                res.status(500).json({ message: "Internal server error" });
+                console.log(err);
             }
             // if a new image was added, delete the old image file since the old imagepath 
             // is replaced with the new path
@@ -137,7 +135,7 @@ exports.updateProduct = function (req, res) {
                     }
                 });
             }
-            res.json(product);
+            res.status(200).json(product);
         });
     });
 };
@@ -152,9 +150,10 @@ exports.deleteProduct = function (req, res) {
     Products.remove({ 'productId': req.params.productId },
         function (err, product) {
             if (err) {
-                res.send(err);
+                res.status(500).json({ message: "Internal server error" });
+                console.log(err);
             }
-            res.json({ "status": "Product deleted" });
+            res.status(200).json({ message: "Product deleted" });
         }
     )
 }
