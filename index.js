@@ -3,7 +3,8 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   morgan = require('morgan'),
-  jsonWebToken = require('jsonwebtoken');
+  jsonWebToken = require('jsonwebtoken'),
+  cloudinary = require('cloudinary');
 
 var User = require('./api/models/usersModel'),
   AboutUs = require('./api/models/aboutUsModel'),
@@ -11,6 +12,12 @@ var User = require('./api/models/usersModel'),
 
 var port = process.env.PORT || 3000;
 var app = express();
+
+cloudinary.config({
+  cloud_name: 'justin2805',
+  api_key: '537388198831657',
+  api_secret: 'txMTxMA53RqtSdA2_aH37n_2FtQ'
+})
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;

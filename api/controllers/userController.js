@@ -51,9 +51,11 @@ exports.sign_in = function (req, res) {
 
 
 
-
+// req.user inserted & obtained by verify of token - done by middleware intercept in index.js
+// might need to validate the usertype, either here or in another method
 exports.loginRequired = function (req, res, next) {
     if (req.user) {
+        console.log(req.user)
         next();
     } else {
         return res.status(401).json({ message: 'Unauthorized user!' });

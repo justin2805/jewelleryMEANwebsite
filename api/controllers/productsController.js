@@ -6,7 +6,9 @@ var express = require('express'),
     formidable = require('formidable'),
     path = require('path'),
     fs = require('fs'),
-    url = require('url');
+    url = require('url'),
+    cloudinary = require('cloudinary'),
+    promise = require('promise');
 
 /**
  * GET:
@@ -44,34 +46,69 @@ exports.fetchAllProducts = function (req, res) {
 exports.uploadProducts = function (req, res) {
 
     var form = new formidable.IncomingForm();
-    var imageFileNamePath;
-
-    // saves image in given location and with randomly generated name
-    form.on('fileBegin', function (name, file) {
-        var extension = file.type;
-        extension = extension.split("/").pop();
-        file.path = path.join(__dirname + `/../../uploads/` + uuid.v4() + "." + extension);
-        imageFileNamePath = file.path;
-    });
-
-    // image save complete
-    form.on('file', function (name, file) {
-        console.log('Uploaded ' + imageFileNamePath);
-    });
+    var imageLocalFileNamePath, imageRemoteFileNamePath, new_product;
     // parse the req object received(in urlencoded form) to form-data form?
     form.parse(req, (err, fields, files) => {
+        new_product = new Products(fields);
+    });
 
-        var new_product = new Products(fields);
-        // if image is sent in the request then manually add the path into the object
-        if (imageFileNamePath) {
-            new_product.product_imagePaths[0] = imageFileNamePath;
-        }
+    let uploadImagePromise = new Promise(function (resolve, reject) {
+        // saves image in given location and with randomly generated name
+        form.on('fileBegin', function (name, file) {
+            var extension = file.type;
+            extension = extension.split("/").pop();
+            file.path = path.join(__dirname + `/../../uploads/` + uuid.v4() + "." + extension);
+            imageLocalFileNamePath = file.path;
+        });
+
+        // image save complete
+        form.on('file', function (name, file) {
+            if (imageLocalFileNamePath) {
+                // api call to the cloud server storage to save the image to remote server
+                // storage
+                cloudinary.uploader.upload(imageLocalFileNamePath, function (result) {
+                    if (result && result.url) {
+                        imageRemoteFileNamePath = result.url;
+                        console.log('Uploaded ' + imageRemoteFileNamePath);
+                        // if image is sent in the request then manually add the path into the object
+                        if (imageLocalFileNamePath) {
+                            new_product.product_imagePaths[0] = imageRemoteFileNamePath;
+                        }
+                        // delete image from local storage when image is uploaded to server
+                        // wont be triggered if user has not uploaded an image in the request
+                        fs.unlink(imageLocalFileNamePath, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+                        resolve()
+                    } else {
+                        resolve()
+                    }
+                }, { use_filename: true });
+            } else {
+                resolve()
+            }
+        });
+    });
+
+    uploadImagePromise.then(function () {
         new_product.save(function (err, product) {
             if (err) {
                 res.status(500).json({ message: "Internal server error" });
                 console.log(err);
+            } else {
+                res.status(201).json({ message: "success" });
             }
-            res.status(201).json({ message: "success" });
+        });
+    }).catch(function () {
+        new_product.save(function (err, product) {
+            if (err) {
+                res.status(500).json({ message: "Internal server error" });
+                console.log(err);
+            } else {
+                res.status(201).json({ message: "success" });
+            }
         });
     });
 };
@@ -103,7 +140,7 @@ exports.updateProduct = function (req, res) {
     var form = new formidable.IncomingForm();
     var query = { 'productId': req.params.productId };
 
-    var imageFileNamePath;
+    var imageLocalFileNamePath, imageRemoteFileNamePath;
     form.on('fileBegin', function (name, file) {
         var extension = file.type;
         extension = extension.split("/").pop();
@@ -114,6 +151,17 @@ exports.updateProduct = function (req, res) {
     form.on('file', function (name, file) {
         console.log('Uploaded ' + imageFileNamePath);
     });
+
+    if (imageLocalFileNamePath) {
+        cloudinary.uploader.upload(imageLocalFileNamePath, function (error, result) {
+            if (error) {
+                res.status(500).json({ message: "Internal server error" });
+                console.log(error);
+            }
+            console.log(result);
+            if (result && result.url) imageRemoteFileNamePath = result.url;
+        });
+    }
 
     form.parse(req, (err, fields, files) => {
 
@@ -128,12 +176,11 @@ exports.updateProduct = function (req, res) {
             }
             // if a new image was added, delete the old image file since the old imagepath 
             // is replaced with the new path
-            if (imageFileNamePath) {
-                fs.unlink(product.product_imagePaths[0], function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
+            if (imageRemoteFileNamePath) {
+                cloudinary.uploader.destroy(product.product_imagePaths[0],
+                    function (result) {
+                        console.log(result)
+                    });
             }
             res.status(200).json(product);
         });
