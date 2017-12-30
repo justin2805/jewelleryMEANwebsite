@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var autoincrement = require('mongoose-auto-increment');
 
-var connection = mongoose.createConnection("mongodb://localhost/saireni");
+var connection = mongoose.createConnection(process.env.DATABASE_NAME);
 autoincrement.initialize(connection);
 
 

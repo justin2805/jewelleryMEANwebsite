@@ -14,14 +14,14 @@ var port = process.env.PORT || 3000;
 var app = express();
 
 cloudinary.config({
-  cloud_name: 'justin2805',
-  api_key: '537388198831657',
-  api_secret: 'txMTxMA53RqtSdA2_aH37n_2FtQ'
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-var db = mongoose.connect('mongodb://localhost/saireni', {
+var db = mongoose.connect(process.env.DATABASE_NAME, {
   useMongoClient: true
 });
 
@@ -29,7 +29,7 @@ var db = mongoose.connect('mongodb://localhost/saireni', {
 app.use(function (req, res, next) {
   if (req.headers && req.headers.authorization &&
     req.headers.authorization.split(' ')[0] === 'JWT') {
-    jsonWebToken.verify(req.headers.authorization.split(' ')[1], 'SagarAirenisSecretKey',
+    jsonWebToken.verify(req.headers.authorization.split(' ')[1], proces.env.JWT_SECRET_KEY,
       function (err, decode) {
         if (err) {
           req.user = undefined;
@@ -79,3 +79,7 @@ app.listen(port, function () {
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + ' not found' })
 });
+
+//todo
+// set timer and renewal for jwt authentication - isNeeded?
+// pagination

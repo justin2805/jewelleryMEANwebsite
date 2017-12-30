@@ -17,6 +17,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "*",
     "cloudinary": "^1.9.1",
+    "dotenv": "^4.0.0",
     "ejs": "*",
     "express": "*",
     "formidable": "^1.1.1",

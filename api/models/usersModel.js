@@ -5,7 +5,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 var autoincrement = require('mongoose-auto-increment');
 var bcrypt = require('bcrypt');
 
-var connection = mongoose.createConnection("mongodb://localhost/saireni");
+var connection = mongoose.createConnection(process.env.DATABASE_NAME);
 autoincrement.initialize(connection);
 
 

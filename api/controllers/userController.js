@@ -42,7 +42,7 @@ exports.sign_in = function (req, res) {
                 return res.status(200).json({
                     token: jwt.sign(
                         { email: user.email, name: user.name, userId: user.userId },
-                        "SagarAirenisSecretKey")
+                        process.env.JWT_SECRET_KEY)
                 });
             }
         }
