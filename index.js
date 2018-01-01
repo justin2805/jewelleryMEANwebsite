@@ -4,7 +4,8 @@ var express = require('express'),
   mongoose = require('mongoose'),
   morgan = require('morgan'),
   jsonWebToken = require('jsonwebtoken'),
-  cloudinary = require('cloudinary');
+  cloudinary = require('cloudinary'),
+  dotenv = require('dotenv').load();
 
 var User = require('./api/models/usersModel'),
   AboutUs = require('./api/models/aboutUsModel'),
@@ -29,7 +30,7 @@ var db = mongoose.connect(process.env.DATABASE_NAME, {
 app.use(function (req, res, next) {
   if (req.headers && req.headers.authorization &&
     req.headers.authorization.split(' ')[0] === 'JWT') {
-    jsonWebToken.verify(req.headers.authorization.split(' ')[1], proces.env.JWT_SECRET_KEY,
+    jsonWebToken.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET_KEY,
       function (err, decode) {
         if (err) {
           req.user = undefined;
@@ -77,6 +78,7 @@ app.listen(port, function () {
 });
 
 app.use(function (req, res) {
+  console.log({ url: req.originalUrl + ' not found' })
   res.status(404).send({ url: req.originalUrl + ' not found' })
 });
 

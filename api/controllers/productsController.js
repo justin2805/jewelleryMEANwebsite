@@ -30,7 +30,7 @@ exports.fetchAllProducts = function (req, res) {
             console.log(err);
         }
         if (products != null && products.length == 0) {
-            res.status(204).json({ message: "No Content" });
+            return res.status(204).json({ message: "No Content" });
         }
         res.status(200).json(products);
     })

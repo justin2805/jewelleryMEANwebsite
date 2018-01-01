@@ -1,0 +1,15 @@
+<div class="banner">
+    <div class="wrapper">
+        <h1 class="banner-text">JEWELLERY</h1>
+    </div>
+</div>
+<h4 *ngIf=isEmpty>No Content!</h4>
+<ul class="jewellery">
+  <li *ngFor="let jewellery of jewelleries">
+    <a href="#">
+      <img [src]="jewellery.product_imagePaths[0]" class=" jewellery-image img-thumbnail">
+      <h4>{{jewellery.name}} (Gray)</h4>
+      <p>₹{{jewellery.cost}}</p>
+    </a>
+  </li>
+</ul>

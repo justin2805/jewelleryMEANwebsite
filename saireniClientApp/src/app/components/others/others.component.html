@@ -1,0 +1,15 @@
+<div class="banner">
+  <div class="wrapper">
+    <h1 class="bannertext">Others</h1>
+  </div>
+</div>
+<h4 *ngIf=isEmpty>No Content!</h4>
+<ul class="others">
+  <li *ngFor="let other of others">
+    <a href="#">
+      <img [src]="other.product_imagePaths[0]" class=" others-image img-thumbnail">
+      <h4>{{other.name}} (Gray)</h4>
+      <p>₹{{other.cost}}</p>
+    </a>
+  </li>
+</ul>

@@ -12,7 +12,8 @@ This README would normally document whatever steps are necessary to get your app
 
 * Summary of set up
 * Configuration
-// set up .env file in root folder
+  1. ENV :
+    1. set up .env file in root folder with appropriate configs
 * Dependencies
 * Database configuration
 * How to run tests

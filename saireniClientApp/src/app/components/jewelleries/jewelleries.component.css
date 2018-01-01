@@ -1,0 +1,32 @@
+ul.jewellery li {
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+}
+
+img.jewellery-image {
+    max-height: 250px;
+}
+
+
+.banner {
+    background: url(http://res.cloudinary.com/justin2805/image/upload/v1514719427/72d30d93-5044-408b-9a87-7cce29b45df8_y6ehfh.jpg) center center no-repeat;
+    background-size: cover;
+    height: 500px;
+}
+
+.wrapper {
+    margin: 0 auto; /* This is what centers it */
+    max-width: 1000px;
+    width: 96%;
+ }
+ h1.banner-text {
+    text-align: center;
+    font-style: italic;
+    font-size: 50px;
+    color: whitesmoke;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+ }

@@ -1,0 +1,32 @@
+ul.accessory li {
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+}
+
+img.accessory-image {
+    max-height: 250px;
+}
+
+
+.banner {
+    background: url(http://res.cloudinary.com/justin2805/image/upload/v1514720684/a14386f9-891f-4e41-8cbc-78e8282f524b_rpregh.jpg) center center no-repeat;
+    background-size: cover;
+    height: 500px;
+}
+
+.wrapper {
+    margin: 0 auto; /* This is what centers it */
+    max-width: 1000px;
+    width: 96%;
+ }
+ h1.bannertext {
+    text-align: center;
+    font-style: italic;
+    font-size: 50px;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+ }
