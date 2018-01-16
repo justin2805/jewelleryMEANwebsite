@@ -1,4 +1,36 @@
-<div class="banner">
+<div class="container">
+    <div class="well well-sm">
+        <strong>JEWELLERY</strong>
+    </div>
+    <ul id="products" class="row list-group">
+        <li class="item  col-xs-4 col-lg-4" *ngFor="let jewellery of jewelleries">
+            <div class="thumbnail">
+                <div class="img-thumb">
+                <img [src]="jewellery.product_imagePaths[0]" class="group list-group-image jewellery-image"  alt="" />
+            </div><div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                        {{jewellery.name}}</h4>
+                    <p class="group inner list-group-item-text">
+                        {{jewellery.description | slice:0:170}}{{jewellery.description.length > 170 ? '...' : ''}}</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                ₹{{jewellery.cost}}</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" (click)="addToCart(jewellery)">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </li>
+      </ul>
+</div>
+
+
+
+
+<!-- <div class="banner">
     <div class="wrapper">
         <h1 class="banner-text">JEWELLERY</h1>
     </div>
@@ -12,4 +44,4 @@
       <p>₹{{jewellery.cost}}</p>
     </a>
   </li>
-</ul>
+</ul> -->

@@ -1,47 +1,73 @@
-<!-- <body data-spy="scroll" data-target=".navbar" data-offset="50">
-<nav class="navbar navbar-default" data-spy="affix" data-offset-top="50">
-  <div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top navcarbox" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <a routerLink="/" routerLinkActive="active" class = "navbar-brand">S.Aireni</a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="/" routerLinkActive="active current">S.Aireni</a>
     </div>
 
-    <ul class="nav navbar-nav">
-      <li>
-        <a routerLink="/" routerLinkActive="active">Home</a>
-      </li>
-      <li>
-        <a routerLink="/jewelleries" routerLinkActive="active">Jewellery</a>
-      </li>
-      <li>
-        <a routerLink="/mobilecases" routerLinkActive="active">Mobile Cases</a>
-      </li>
-      <li>
-        <a routerLink="/accessories" routerLinkActive="active">Accessories</a>
-      </li>
-      <li>
-        <a routerLink="/others" routerLinkActive="active">Others</a>
-      </li>
-    </ul>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li >
+          <a routerLink="/" routerLinkActive="active current">Home</a>
+        </li>
+        <li>
+          <a routerLink="/about_us" routerLinkActive="active current">About Us</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shopping
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a routerLink="/jewelleries" routerLinkActive="active current">Jewelleries</a>
+            </li>
+            <li>
+              <a routerLink="/mobilecases" routerLinkActive="active current">Mobile Cases</a>
+            </li>
+            <li>
+              <a routerLink="/accessories" routerLinkActive="active current">Accessories</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a routerLink="/others" routerLinkActive="active current">Others</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a routerLink="/contact_us" routerLinkActive="active current">Contact Us</a>
+        </li>
+        <li class="divider"></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login/SignUp
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a routerLink="/login" routerLinkActive="active current">Login</a>
+            </li>
+            <li>
+                <a routerLink="/register" routerLinkActive="active current">Sign up</a>
+              </li>
+          </ul>
+        </li>
+        <li>
+          <a routerLink="/cart" routerLinkActive="active current">Shopping Cart {{itemsQuantity}}</a>
+        </li>
+
+
+
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
   </div>
+  <!-- /.container-collapse -->
 </nav>
-</body> -->
-
-
-
-<nav id="header" class="navbar navbar-fixed-top">
-    <div id="header-container" class="container navbar-container">
-        <div class="navbar-header">
-            <a id="brand" class="navbar-brand" routerLink="/" routerLinkActive="active">
-              S. Aireni Jewellers and Accessories</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a routerLink="/" routerLinkActive="active">Home</a></li>
-                <li><a routerLink="/jewelleries" routerLinkActive="active">Jewelleries</a></li>
-                <li><a routerLink="/mobilecases" routerLinkActive="active">Mobile Cases</a></li>
-                <li><a routerLink="/accessories" routerLinkActive="active">Accessories</a></li>
-                <li><a routerLink="/others" routerLinkActive="active">Others</a></li>
-            </ul>
-        </div><!-- /.nav-collapse -->
-    </div><!-- /.container -->
-</nav><!-- /.navbar -->

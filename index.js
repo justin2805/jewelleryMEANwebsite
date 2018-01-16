@@ -9,7 +9,8 @@ var express = require('express'),
 
 var User = require('./api/models/usersModel'),
   AboutUs = require('./api/models/aboutUsModel'),
-  Products = require('./api/models/productsModel');
+  Products = require('./api/models/productsModel'),
+  cors = require('cors');
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -60,9 +61,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST,PUT,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+app.use(cors());
 
 // route
 var userRoutes = require('./api/routes/userRoutes');

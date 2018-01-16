@@ -23,7 +23,7 @@ exports.fetchAllProducts = function (req, res) {
     var url_parts = url.parse(req.url, true);
     var query = url_parts.query;
     console.log(query)
-    var projection = '-_id name productId cost productType product_imagePaths';
+    var projection = '-_id';
     Products.find(query, projection, function (err, products) {
         if (err) {
             res.status(500).json({ message: "Internal server error" });

@@ -1,4 +1,6 @@
+import { Products } from './../../Entities/Products.entities';
 import { ProductsService } from './../../services/products.service';
+import { CartService } from './../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,8 +12,8 @@ export class OthersComponent implements OnInit {
   isEmpty: boolean = false;
   others: Products[];
 
-  constructor(private productsservice: ProductsService) {
-    console.log("Products service init")
+  constructor(private productsservice: ProductsService, 
+    private cartService: CartService) {
    }
 
   ngOnInit() {
@@ -21,5 +23,9 @@ export class OthersComponent implements OnInit {
       this.others = others;
       this.isEmpty = this.others == null || this.others.length ==0;
     })
+  }
+
+  addToCart(others) {
+    this.cartService.addToCart(others,1);
   }
 }

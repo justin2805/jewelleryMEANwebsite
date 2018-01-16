@@ -1,3 +1,5 @@
+import { CartService } from './../../services/cart.service';
+import { Products } from './../../Entities/Products.entities';
 import { ProductsService } from './../../services/products.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,18 +13,21 @@ export class JewelleriesComponent implements OnInit {
   jewelleries: Products[];
   isEmpty: boolean = false;
 
-  constructor(private productsservice: ProductsService) {
-    console.log("Products service init")
+  constructor(private productsservice: ProductsService, 
+    private cartService: CartService) {
    }
 
   ngOnInit() {
     var param = "JEWELLERY";
     this.productsservice.getProducts(param).subscribe((jewelleries)=>{
-      console.log(jewelleries);
       this.jewelleries = jewelleries;
       this.jewelleries = jewelleries;
       this.isEmpty = this.jewelleries == null || this.jewelleries.length ==0;
     })
+  }
+
+  addToCart(jewellery) {
+    this.cartService.addToCart(jewellery,1);
   }
 
 }

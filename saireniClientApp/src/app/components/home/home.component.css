@@ -1,0 +1,107 @@
+.navcarbox {
+    padding-left:5px;
+    display: block; 
+    line-height: 1.42857143;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12); 
+    transition: box-shadow .25s; 
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #fff;
+    text-decoration: none;
+    background-color: #f7941d;
+    
+}
+.navbar-brand img {
+    float: left;
+    transition: all .5s ease-out;
+    margin: 0;
+}
+
+/* Slider CSS */
+/* Carousel Styles */
+
+/* Carousel Styles */
+
+.carousel-control {color: #e2e2e2;}
+
+.carousel-indicators .active {background-color: #ff5900;}
+.carousel-inner img {width: 100%;max-height: 420px;}
+.carousel-control.left,
+.carousel-control.right {
+	opacity: 1;
+	filter: alpha(opacity=100);
+	background-image: none;
+	background-repeat: no-repeat;
+	text-shadow: none;
+}
+.carousel-control.left span {margin-left: 50px;}
+.carousel-control.right span {margin-right: 50px;}
+.carousel-control .glyphicon-chevron-left, 
+.carousel-control .glyphicon-chevron-right, 
+.carousel-control .icon-prev, 
+.carousel-control .icon-next {
+	position: absolute;
+	top: 45%;
+	z-index: 5;
+	display: inline-block;
+	
+}
+
+.carousel-control .glyphicon-chevron-left,
+.carousel-control .icon-prev {
+	left: 0;
+}
+
+.carousel-control .glyphicon-chevron-right,
+.carousel-control .icon-next {
+	right: 0;
+	
+}
+
+.carousel-control.left span,
+.carousel-control.right span {
+	background-color: none;
+	
+}
+
+.carousel-control.left span:hover,
+.carousel-control.right span:hover {
+	opacity: .7;
+	filter: alpha(opacity=70);
+}
+
+/* Carousel Header Styles */
+.header-text {
+    position: absolute;
+    top: 35%;
+    left: 1.8%;
+    right: auto;
+    width: 96.66666666666666%;
+    color: #fff;
+    font-size:18px;
+    letter-spacing:1px;
+}
+
+.header-text h2 {font-size: 60px;color:#fff; font-weight:600;}
+.header-text h2 span {padding: 10px; color:orange;}
+.header-text h3 span {padding: 15px;}
+
+.btn-min-block {min-width: 170px;line-height: 26px;}
+
+.btn-theme {
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid #fff;
+    margin-right: 15px;
+}
+
+.btn-theme:hover {
+    color: #000;
+    background-color: #f7941d;
+    border-color: #fff;
+}
+.navbar {
+    margin-bottom:0px;
+}

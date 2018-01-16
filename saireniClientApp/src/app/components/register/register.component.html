@@ -1,0 +1,39 @@
+<body>
+    <form [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)" class="container">
+            <h1>Register</h1>
+        <div class="form-group">
+            <label for="fullName">Name</label>
+            <input type="text" class="form-control span3" name="fullName" 
+            placeholder="Enter your full name"
+            formControlName="fullName">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['fullName'].valid && rForm.controls['fullName'].touched">This field is required and should have minimum 3 characters.</div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control span3" name="email" placeholder="Enter your email id" formControlName="email">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">This field is required and requires a valid email id.</div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control span3" name="password" placeholder="Enter your password" formControlName="password">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">This field is required and should have min 8 and max 12 characters.</div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="text" class="form-control span3" name="confirmPassword" placeholder="Confirm your email id" formControlName="confirmPassword">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['confirmPassword'].valid 
+        && rForm.controls['confirmPassword'].touched
+        && rForm.controls.confirmPassword.errors.MatchPassword">Passwords must be equal.</div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea id="address" rows="4" type="text" class="form-control" name="address" placeholder="Enter your address" formControlName="address"></textarea>
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['address'].valid && rForm.controls['address'].touched">This field is required.</div>
+        <input type="submit" value="Register" [disabled]=!rForm.valid
+        class="btn btn-primary submit_btn">
+        <div class="notifyLog">Already have an account? <b><a routerLink="/login">Login</a></b></div>
+    </form>
+</body>
+
+

@@ -1,6 +1,53 @@
-<div class="banner">
+<div class="container">
+    <div class="well well-sm">
+        <strong>Accessories</strong>
+    </div>
+    <ul id="products" class="row list-group">
+        <li class="item  col-xs-4 col-lg-4" *ngFor="let accessory of accessories">
+            <div class="thumbnail">
+                <div class="img-thumb">
+                <img [src]="accessory.product_imagePaths[0]" class="group list-group-image jewellery-image"  alt="" />
+            </div><div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                        {{accessory.name}}</h4>
+                    <p class="group inner list-group-item-text">
+                        {{accessory.description | slice:0:170}}{{accessory.description.length > 170 ? '...' : ''}}</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                ₹{{accessory.cost}}</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" (click)="addToCart(accessory)">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </li>
+      </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+<div class="banner jumbotron jumbotron-fluid">
   <div class="wrapper">
-    <h1 class="bannertext">Others</h1>
+    <h1 class="bannertext">Accessories</h1>
   </div>
 </div>
 <h4 *ngIf=isEmpty>No Content!</h4>
@@ -12,4 +59,4 @@
       <p>₹{{accessory.cost}}</p>
     </a>
   </li>
-</ul>
+</ul> -->

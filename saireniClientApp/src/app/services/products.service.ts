@@ -10,11 +10,20 @@ export class ProductsService {
    }
 
    getProducts(productType: String){
-     return this.http.get('http://192.168.1.102:3001/products', {
+     return this.http.get('http://192.168.1.103:3001/products', {
        params:{
         productType : productType
        }
      }).map(res => res.json());
+   }
+
+   getSingleProduct(productId: number){
+     return this.http.get(`http://192.168.1.103:3001/products/${productId}`)
+     .map(res => res.json());
+   }
+
+   uploadProducts(body) {
+     this.http.post('http://192.168.1.103:3001/products',body,)
    }
 
 }

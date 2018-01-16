@@ -1,0 +1,46 @@
+<body>
+    <form [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)" class="container">
+            <h1>Login</h1>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control span3" name="email" placeholder="Enter your email id" formControlName="email">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">This field is required and requires a valid email id.</div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control span3" name="password" placeholder="Enter your password" formControlName="password">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">This field is required.</div>
+        <input type="submit" value="Login" [disabled]=!rForm.valid
+        class="btn btn-primary submit_btn">
+        <div class="notifyReg">Don't have an account? <b><a routerLink="/register">Register</a></b></div>
+    </form>
+</body>
+
+
+
+<!-- <div class="form-group"
+        ng-class="{'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+            <label for="name">Name</label>
+            <input required minlength="3" ng-model="user.name" name="name" id="name" type="text" class="form-control">
+            <div class="alert alert-danger" *ngIf="name.touched && !name.valid">Name is required.</div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input required ngModel name="email" #email="ngModel" (change)="log(email)" id="email" type="email" class="form-control span3">
+            <div class="alert alert-danger" *ngIf="email.touched && !email.valid">Email is required.</div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input required ngModel name="password" #password="ngModel" (change)="log(password)" id="password" type="text" class="form-control">
+            <div class="alert alert-danger" *ngIf="password.touched && !password.valid">Password is required.</div>
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input id="confirm_password" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea id="address" type="text" cols="30" rows="5" class="form-control"></textarea>
+        </div>
+        <input type="submit" value="submit" class="btn btn-primary"> -->

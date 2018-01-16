@@ -1,9 +1,12 @@
+import { RegisterService } from './services/register.service';
+import { LoginService } from './services/login.service';
+import { CartService } from './services/cart.service';
 import { AuthService } from './auth/auth.service';
 import { ModuleWithProviders } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes,RouterModule} from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -19,6 +22,14 @@ import { UserService } from './services/user.service';
 import { ProductsService } from './services/products.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductTokenAuthInterceptor } from './auth/product_token_auth.interceptor';
+import { LoginComponent } from './components/login/login.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { PasswordValidation } from './Utils/password.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AddProductComponent } from './components/add-product/add-product.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -27,6 +38,11 @@ const appRoutes: Routes = [
   {path: 'accessories', component: AccessoriesComponent},
   {path: 'mobilecases', component: MobileCasesComponent},
   {path: 'others', component: OthersComponent},
+  {path: 'login', component:LoginComponent},
+  {path: 'contact_us', component: ContactUsComponent},
+  {path: 'about_us', component: AboutUsComponent},
+  {path: 'register', component:RegisterComponent},
+  {path: 'cart', component:ShoppingCartComponent, canActivate: [LoginService]},
   {path: '**', component: NotFoundComponent}
 ];
 
@@ -34,6 +50,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
@@ -47,11 +64,21 @@ const appRoutes: Routes = [
     JewelleriesComponent,
     MobileCasesComponent,
     NotFoundComponent,
-    ProductComponent
-  ],
+    ProductComponent,
+    LoginComponent,
+    ContactUsComponent,
+    AboutUsComponent,
+    RegisterComponent,
+    AddProductComponent,
+    EditProductComponent,
+    ShoppingCartComponent
+    ],
   providers: [
     UserService,
     ProductsService,
+    LoginService,
+    RegisterService,
+    CartService,
     HttpClientModule,
     AuthService,
     {

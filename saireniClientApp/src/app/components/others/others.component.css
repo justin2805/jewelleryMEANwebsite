@@ -1,33 +1,22 @@
-ul.others li {
-    width: 200px;
-    display: inline-block;
-    vertical-align: top;
-    *display: inline;
-    *zoom: 1;
+.container{
+    margin-top: 5%;
 }
 
-img.others-image {
-    max-height: 250px;
+img.jewellery-image {
+    max-height: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+li{
+    list-style: none;
 }
 
-
-.banner {
-    background: url(http://res.cloudinary.com/justin2805/image/upload/v1514720711/d4eabd58-9c7c-4b2b-8c89-a7d5e6e85ae4_c6ylca.jpg
-    ) center center no-repeat;
-    background-size: cover;
-    height: 500px;
+div .img-thumb{
+    height: 250px;
 }
 
-.wrapper {
-    margin: 0 auto; /* This is what centers it */
-    max-width: 1000px;
-    width: 96%;
- }
- h1.bannertext {
-    text-align: center;
-    font-style: italic;
-    font-size: 50px;
-    color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
- }
+ul{
+    max-width: fit-content;
+}
