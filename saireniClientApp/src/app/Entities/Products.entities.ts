@@ -6,4 +6,9 @@ export class Products{
   productType: string;
   quantity: number;
   availableQty: number;
+  description: string;
+  availability: boolean;
+  quality: string;
+  safety_info: string;
+  legal_disclaimer: string;
 }

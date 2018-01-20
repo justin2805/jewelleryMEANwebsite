@@ -8,8 +8,9 @@ var express = require('express'),
   dotenv = require('dotenv').load();
 
 var User = require('./api/models/usersModel'),
-  AboutUs = require('./api/models/aboutUsModel'),
+  ContactUs = require('./api/models/contactUsModel'),
   Products = require('./api/models/productsModel'),
+  ReqStock = require('./api/models/reqStockModel'),
   cors = require('cors');
 
 var port = process.env.PORT || 3000;
@@ -68,11 +69,13 @@ app.use(cors());
 
 // route
 var userRoutes = require('./api/routes/userRoutes');
-var aboutUsRoutes = require('./api/routes/aboutusRoutes');
+var contactUsRoutes = require('./api/routes/contactUsRoutes');
 var productsRoutes = require('./api/routes/productsRoutes');
+var reqStockRoutes = require('./api/routes/reqStockRoutes');
 userRoutes(app);
-aboutUsRoutes(app);
+contactUsRoutes(app);
 productsRoutes(app);
+reqStockRoutes(app);
 
 
 app.listen(port, function () {

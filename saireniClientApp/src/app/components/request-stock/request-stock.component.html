@@ -1,0 +1,53 @@
+<body>
+    <form [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)" class="container">
+        <h1>Request Stock</h1>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control span3" name="name" placeholder="Enter your name" formControlName="name">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">This field is required.</div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control span3" name="email" placeholder="Enter your email id" formControlName="email">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">This field is required and must provide a valid email id.</div>
+
+        <div class="form-group">
+            <label for="mobileNumber">Mobile Number</label>
+            <input type="number" class="form-control span3" name="mobileNumber" placeholder="Enter your mobile number" formControlName="mobileNumber">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['mobileNumber'].valid && rForm.controls['mobileNumber'].touched">This field is required.</div>
+
+
+        <div class="form-group">
+            <label for="productId">Product Id</label>
+            <input type="text" disabled class="form-control span3" name="productId" formControlName="productId" placeholder="{{id}}"/>
+        </div>
+        
+        <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input type="text" disabled class="form-control span3" name="productName" formControlName="productName" placeholder="{{name}}" value="{{name}}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="productQtReqd">Required Quantity</label>
+            <input type="number" class="form-control span3" name="productQtReqd" placeholder="Enter required product Quantity" formControlName="productQtReqd">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['productQtReqd'].valid && rForm.controls['productQtReqd'].touched">This field is required.</div>
+
+
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" class="form-control span3" name="subject" placeholder="Enter the subject(optional)" formControlName="subject">
+        </div>
+
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="address" rows="4" type="text" class="form-control span3" name="message" placeholder="Enter message(optional)" formControlName="message"></textarea>
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['message'].valid && rForm.controls['message'].touched">This field is required.</div>
+
+        <input type="submit" value="Submit" [disabled]=!rForm.valid class="btn btn-primary submit_btn">
+    </form>
+</body>

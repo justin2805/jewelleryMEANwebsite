@@ -1,3 +1,5 @@
+import { RequestStockService } from './services/request-stock.service';
+import { ContactUsService } from './services/contact-us.service';
 import { RegisterService } from './services/register.service';
 import { LoginService } from './services/login.service';
 import { CartService } from './services/cart.service';
@@ -30,10 +32,13 @@ import { RegisterComponent } from './components/register/register.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { ViewContactEntriesComponent } from './components/view-contact-entries/view-contact-entries.component';
+import { RequestStockComponent } from './components/request-stock/request-stock.component';
+import { ViewStockRequestsComponent } from './components/view-stock-requests/view-stock-requests.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'jewelleries/:productId', component: ProductComponent},
+  {path: 'products/:productId', component: ProductComponent},
   {path: 'jewelleries', component: JewelleriesComponent},
   {path: 'accessories', component: AccessoriesComponent},
   {path: 'mobilecases', component: MobileCasesComponent},
@@ -42,7 +47,12 @@ const appRoutes: Routes = [
   {path: 'contact_us', component: ContactUsComponent},
   {path: 'about_us', component: AboutUsComponent},
   {path: 'register', component:RegisterComponent},
-  {path: 'cart', component:ShoppingCartComponent, canActivate: [LoginService]},
+  {path: 'cart', component:ShoppingCartComponent},
+  {path: 'add_product', component: AddProductComponent},
+  {path: 'view_contact_entries', component:ViewContactEntriesComponent},
+  {path: 'view_requested_stock_entries', component:ViewStockRequestsComponent},
+  {path: 'request_stock/:name/:productId',component:RequestStockComponent},
+  {path: 'edit_product/:prod_id', component: EditProductComponent},
   {path: '**', component: NotFoundComponent}
 ];
 
@@ -71,7 +81,10 @@ const appRoutes: Routes = [
     RegisterComponent,
     AddProductComponent,
     EditProductComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    ViewContactEntriesComponent,
+    RequestStockComponent,
+    ViewStockRequestsComponent
     ],
   providers: [
     UserService,
@@ -79,6 +92,8 @@ const appRoutes: Routes = [
     LoginService,
     RegisterService,
     CartService,
+    ContactUsService,
+    RequestStockService,
     HttpClientModule,
     AuthService,
     {

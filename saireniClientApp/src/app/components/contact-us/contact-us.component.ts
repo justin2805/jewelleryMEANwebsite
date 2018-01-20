@@ -1,5 +1,7 @@
+import { ContactUsService } from './../../services/contact-us.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Contacts } from '../../Entities/contact.entities';
 
 @Component({
   selector: 'app-contact-us',
@@ -10,13 +12,9 @@ export class ContactUsComponent implements OnInit {
 
   rForm: FormGroup;
   form:any;
-  name:string;
-  email:string;
-  mobileNumber:number;
-  subject:string;
-  message:string;
+  body: Contacts = new Contacts();
   
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private contactsService: ContactUsService) { 
     this.rForm = fb.group({
       'name': [null, Validators.required],
       'email': [null, Validators.compose(
@@ -36,10 +34,14 @@ export class ContactUsComponent implements OnInit {
   
 
   onSubmit(form){
-    this.name = form.name;
-    this.email = form.email;
-    this.mobileNumber = form.mobileNumber;
-    this.subject = form.subject;
-    this.message = form.message;
+    this.body.name = form.name;
+    this.body.email = form.email;
+    this.body.mobileNo = form.mobileNumber;
+    this.body.subject = form.subject;
+    this.body.message = form.message;
+    this.contactsService.uploadContact(this.body).subscribe((res)=>{
+      console.log(res)
+      this.rForm.reset();
+    })
   }
 }

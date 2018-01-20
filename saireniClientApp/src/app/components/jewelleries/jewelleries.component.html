@@ -5,10 +5,10 @@
     <ul id="products" class="row list-group">
         <li class="item  col-xs-4 col-lg-4" *ngFor="let jewellery of jewelleries">
             <div class="thumbnail">
-                <div class="img-thumb">
+                <div class="img-thumb" [routerLink]="['/products',jewellery.productId]">
                 <img [src]="jewellery.product_imagePaths[0]" class="group list-group-image jewellery-image"  alt="" />
             </div><div class="caption">
-                    <h4 class="group inner list-group-item-heading">
+                    <h4 class="group inner list-group-item-heading" [routerLink]="['/products',jewellery.productId]">
                         {{jewellery.name}}</h4>
                     <p class="group inner list-group-item-text">
                         {{jewellery.description | slice:0:170}}{{jewellery.description.length > 170 ? '...' : ''}}</p>
@@ -18,7 +18,7 @@
                                 ₹{{jewellery.cost}}</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" (click)="addToCart(jewellery)">Add to cart</a>
+                            <button class="btn btn-success" [disabled]=!jewellery.availability (click)="addToCart(jewellery)">Add to cart</button>
                         </div>
                     </div>
                 </div>

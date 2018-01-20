@@ -1,3 +1,80 @@
-<p>
-  product works!
-</p>
+<div class="container-fluid">
+    <div class="content-wrapper">	
+		<div class="item-container">	
+			<div class="container">	
+				<div class="col-md-5">
+					<div class="product service-image-left thumbnail">
+                    
+						<!-- <center> -->
+							<img id="item-display" [src]=product.product_imagePaths[0] alt=""/>
+						<!-- </center> -->
+					</div>
+					
+					<!-- <div class="container service1-items col-sm-2 col-md-2 pull-left">
+						<center>
+							<a id="item-1" class="service1-item">
+								<img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
+							</a>
+							<a id="item-2" class="service1-item">
+								<img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
+							</a>
+							<a id="item-3" class="service1-item">
+								<img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
+							</a>
+						</center>
+					</div> -->
+				</div>
+					
+				<div class="col-md-5">
+					<div class="product-title">{{product.name}}</div>
+					<!-- <div class="product-rating"><i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star-o"></i> </div> -->
+					<hr>
+					<div class="product-price">₹{{product.cost}}</div>
+          <div class="product-stock" *ngIf=product.availability>In Stock</div>
+          <div class="product-stock-not" *ngIf=!product.availability>Out of Stock</div>
+          <div class="btn btn-primary" [routerLink]="['/request_stock',product.name, product.productId]">Request for more stock</div>
+					<hr>
+					<div class="btn-group cart">
+            <button type="button" class="btn btn-success" [disabled]=!product.availability
+             (click)="addToCart(product)">
+							Add to cart 
+						</button>
+					</div>
+				</div>
+			</div> 
+		</div>
+		<div class="container-fluid">		
+			<div class="col-md-12 product-info">
+					<ul id="myTab" class="nav nav-tabs nav_tabs">
+						
+						<li class="active"><a href="#service-one" data-toggle="tab">DESCRIPTION</a></li>
+						<li><a href="#service-two" data-toggle="tab">PRODUCT INFO</a></li>
+						<li><a href="#service-three" data-toggle="tab">REVIEWS</a></li>
+						
+					</ul>
+				<div id="myTabContent" class="tab-content">
+						<div class="tab-pane fade in active" id="service-one">
+						 
+							<section class="container product-info">
+								{{product.description}}
+							</section>
+										  
+						</div>
+					<div class="tab-pane fade" id="service-two">
+						
+						<section class="container product-info">
+								{{product.quality}}
+						</section>
+						
+					</div>
+					<div class="tab-pane fade" id="service-three">
+              <section class="containe product-info">
+                  {{product.safety_info}}
+              </section>		
+					</div>
+				</div>
+				<hr>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,8 +1,22 @@
 .container{
     margin-top: 5%;
+    background-color: white;
 }
 
-img.jewellery-image {
+table td, table th {
+    word-wrap: break-word;
+    text-align: center
+}
+
+table { 
+    table-layout: fixed;
+}
+
+.btn-primary {
+    cursor: pointer;
+}
+
+/* img.jewellery-image {
     max-height: 100%;
     max-width: 100%;
     margin-left: auto;
@@ -19,12 +33,4 @@ div .img-thumb{
 
 ul{
     max-width: fit-content;
-}
-
-.img-thumb, h4 {
-    cursor: pointer;
-}
-
-h4:hover {
-    color: darkblue;
-}
+} */

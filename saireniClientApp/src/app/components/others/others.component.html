@@ -6,9 +6,10 @@
       <li class="item  col-xs-4 col-lg-4" *ngFor="let other of others">
           <div class="thumbnail">
               <div class="img-thumb">
-              <img [src]="other.product_imagePaths[0]" class="group list-group-image jewellery-image"  alt="" />
+              <img [src]="other.product_imagePaths[0]" [routerLink]="['/products',other.productId]" 
+              class="group list-group-image jewellery-image"  alt="" />
           </div><div class="caption">
-                  <h4 class="group inner list-group-item-heading">
+                  <h4 class="group inner list-group-item-heading" [routerLink]="['/products',other.productId]">
                       {{other.name}}</h4>
                   <p class="group inner list-group-item-text">
                       {{other.description | slice:0:170}}{{other.description.length > 170 ? '...' : ''}}</p>
@@ -18,7 +19,7 @@
                               ₹{{other.cost}}</p>
                       </div>
                       <div class="col-xs-12 col-md-6">
-                          <a class="btn btn-success" (click)="addToCart(other)">Add to cart</a>
+                          <button class="btn btn-success" [disabled]=!other.availability (click)="addToCart(other)">Add to cart</button>
                       </div>
                   </div>
               </div>

@@ -1,0 +1,25 @@
+<table class="table container table-bordered table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="col-sm-1">Id</th>
+      <th scope="col" class="col-sm-3">Name</th>
+      <th scope="col" class="col-sm-3">Email</th>
+      <th scope="col" class="col-sm-3">Contact Number</th>
+      <th scope="col" class="col-sm-3">Subject</th>
+      <th scope="col" class="col-sm-5">Message</th>
+      <th scope="col" class="col-sm-3">Received Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contact of contacts">
+      <!-- <th scope="row">{{contact.entryId}}</th> -->
+      <td>{{contact.entryId}}</td>
+      <td>{{contact.name}}</td>
+      <td>{{contact.email}}</td>
+      <td>{{contact.mobileNo}}</td>
+      <td>{{contact.subject}}</td>
+      <td>{{contact.message}}</td>
+      <td>{{contact.sent_date}}</td>
+    </tr>
+  </tbody>
+</table>

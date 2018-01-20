@@ -1,3 +1,64 @@
-<p>
-  edit-product works!
-</p>
+<body>
+  <form [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)" class="container">
+    <h1>Add Products</h1>
+    <div class="form-group">
+      <label for="prod_name">Product Name</label>
+      <input type="text" class="form-control span3" name="prod_name" placeholder="Enter your product name" formControlName="prod_name"
+      value="{{originalProdVal.name}}">
+    </div>
+    <div class="alert alert-danger" *ngIf="!rForm.controls['prod_name'].valid && rForm.controls['prod_name'].touched">This field is required.</div>
+
+    <div class="form-group">
+      <label for="prod_cost">Product Cost</label>
+      <input type="number" class="form-control span3" name="prod_cost" placeholder="Enter your product cost" formControlName="prod_cost"
+      value="{{originalProdVal.cost}}">
+    </div>
+    <div class="alert alert-danger" *ngIf="!rForm.controls['prod_cost'].valid && rForm.controls['prod_cost'].touched">This field is required.</div>
+
+    <div class="form-group">
+      <label for="prod_qty">Product Quantity</label>
+      <input type="text" class="form-control span3" name="prod_qty" placeholder="Enter your available product quantity" formControlName="prod_qty"
+      value="{{originalProdVal.availableQty}}">
+    </div>
+    <div class="alert alert-danger" *ngIf="!rForm.controls['prod_qty'].valid && rForm.controls['prod_qty'].touched">This field is required.</div>
+
+    <div class="form-group">
+      <label for="productType">Product Category</label>
+      <input type="text" class="form-control span3" name="productType" placeholder="Enter the Product Category" formControlName="productType"
+      value="{{originalProdVal.productType}}">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" rows="4" type="text" class="form-control span3" name="description" placeholder="Enter the description"
+        formControlName="description" [(ngModel)]='originalProdVal.description'></textarea>
+    </div>
+    <div class="alert alert-danger" *ngIf="!rForm.controls['description'].valid && rForm.controls['description'].touched">This field is required.</div>
+
+    <div class="form-group">
+      <label for="quality">Quality</label>
+      <textarea id="quality" rows="4" type="text" class="form-control span3" name="quality" placeholder="Enter the quality information" 
+      formControlName="quality"  [(ngModel)]='originalProdVal.quality'></textarea>
+    </div>
+    <div class="alert alert-danger" *ngIf="!rForm.controls['quality'].valid && rForm.controls['quality'].touched">This field is required.</div>
+
+    <div class="form-group">
+      <label for="safety_info">Safety Information</label>
+      <textarea id="safety_info" rows="4" type="text" class="form-control span3" name="safety_info" 
+      placeholder="Enter the safety information" [(ngModel)]='originalProdVal.safety_info'
+        formControlName="safety_info"></textarea>
+    </div>
+    <div class="alert alert-danger" *ngIf="!rForm.controls['safety_info'].valid && rForm.controls['safety_info'].touched">This field is required.</div>
+
+    <div class="form-group">
+      <label for="legal_disclaimer">Legal Disclaimer</label>
+      <textarea id="legal_disclaimer" rows="4" type="text" class="form-control span3" name="legal_disclaimer" placeholder="Enter the legal disclaimer"
+        formControlName="legal_disclaimer" [(ngModel)]='originalProdVal.legal_disclaimer'
+        ></textarea>
+    </div>
+    <div class="alert alert-danger" *ngIf="!rForm.controls['legal_disclaimer'].valid && rForm.controls['legal_disclaimer'].touched">This field is required.</div>
+
+
+    <input type="submit" value="Submit" [disabled]=!rForm.valid class="btn btn-primary submit_btn">
+  </form>
+</body>

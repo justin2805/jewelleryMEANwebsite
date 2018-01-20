@@ -20,3 +20,11 @@ div .img-thumb{
 ul{
     max-width: fit-content;
 }
+
+.img-thumb, h4 {
+    cursor: pointer;
+}
+
+h4:hover {
+    color: darkblue;
+}

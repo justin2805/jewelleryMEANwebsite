@@ -1,0 +1,33 @@
+<table class="table container table-bordered table-striped">
+    <thead>
+      <tr>
+        <th scope="col" class="col-sm-1">Id</th>
+        <th scope="col" class="col-sm-2">Product Id</th>
+        <th scope="col" class="col-sm-3">Product Name</th>
+        <th scope="col" class="col-sm-2">Product Quantity</th>
+        <th scope="col" class="col-sm-3">Requester Name</th>
+        <th scope="col" class="col-sm-3">Requester Email</th>
+        <th scope="col" class="col-sm-3">Requester Contact Number</th>
+        <th scope="col" class="col-sm-3">Subject</th>
+        <th scope="col" class="col-sm-5">Message</th>
+        <th scope="col" class="col-sm-3">Request Received Date</th>
+        <th scope="col" class="col-sm-3">Request status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let requestedStocks of requestedStock">
+        <!-- <th scope="row">{{contact.entryId}}</th> -->
+        <td>{{requestedStocks.entryId}}</td>
+        <td>{{requestedStocks.prod_id}}</td>
+        <td>{{requestedStocks.prod_name}}</td>
+        <td>{{requestedStocks.prod_qty}}</td>
+        <td>{{requestedStocks.name}}</td>
+        <td>{{requestedStocks.email}}</td>
+        <td>{{requestedStocks.mobileNo}}</td>
+        <td>{{requestedStocks.subject}}</td>
+        <td>{{requestedStocks.message}}</td>
+        <td>{{requestedStocks.sent_date}}</td>
+        <td class="btn-primary" [routerLink]="['/edit_product',requestedStocks.prod_id]">Process</td>
+      </tr>
+    </tbody>
+  </table>
