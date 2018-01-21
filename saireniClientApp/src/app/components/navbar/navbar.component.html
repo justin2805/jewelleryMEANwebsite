@@ -63,6 +63,27 @@
           <a routerLink="/cart" routerLinkActive="active current">Shopping Cart {{itemsQuantity}}</a>
         </li>
 
+        <li class="dropdown" *ngIf=isAdmin>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin Module
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a routerLink="/add_product" routerLinkActive="active current">Add Product</a>
+            </li>
+            <li>
+              <a routerLink="/edit_product/:prod_id" routerLinkActive="active current">Edit/Delete Product</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a routerLink="/view_contact_entries" routerLinkActive="active current">View Contact Entries</a>
+            </li>
+            <li>
+              <a routerLink="/view_requested_stock_entries" routerLinkActive="active current">View Requested Stock Entries</a>
+            </li>
+          </ul>
+        </li>
+
 
 
       </ul>

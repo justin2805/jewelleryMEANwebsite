@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router/src/interfaces';
+import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 
@@ -10,10 +10,18 @@ export class AuthGuardService implements CanActivate {
 
   canActivate() {
     if(this.login.loggedIn()) {
-      return true;
+      if(this.login.isAdmin()) {
+        console.log('11')
+        return true;
+      } else {
+        console.log('12');
+        this.router.navigateByUrl('/unauthorized');
+        return false;
+      }
     } else {
-      this.router.navigateByUrl('/login');
-      return false
+      console.log('13')
+      this.router.navigateByUrl('/unauthorized');
+      return false;
     }
    }
 

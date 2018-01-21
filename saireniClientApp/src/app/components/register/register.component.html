@@ -8,6 +8,13 @@
             formControlName="fullName">
         </div>
         <div class="alert alert-danger" *ngIf="!rForm.controls['fullName'].valid && rForm.controls['fullName'].touched">This field is required and should have minimum 3 characters.</div>
+        
+        <div class="form-group">
+            <label for="phone">Contact Number</label>
+            <input type="phone" class="form-control span3" name="phone" placeholder="Enter your contact number" formControlName="phone">
+        </div>
+        <div class="alert alert-danger" *ngIf="!rForm.controls['phone'].valid && rForm.controls['phone'].touched">This field is required.</div>
+        
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" class="form-control span3" name="email" placeholder="Enter your email id" formControlName="email">
@@ -15,12 +22,12 @@
         <div class="alert alert-danger" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">This field is required and requires a valid email id.</div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="text" class="form-control span3" name="password" placeholder="Enter your password" formControlName="password">
+            <input type="password" class="form-control span3" name="password" placeholder="Enter your password" formControlName="password">
         </div>
         <div class="alert alert-danger" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">This field is required and should have min 8 and max 12 characters.</div>
         <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="text" class="form-control span3" name="confirmPassword" placeholder="Confirm your email id" formControlName="confirmPassword">
+            <input type="password" class="form-control span3" name="confirmPassword" placeholder="Confirm your email id" formControlName="confirmPassword">
         </div>
         <div class="alert alert-danger" *ngIf="!rForm.controls['confirmPassword'].valid 
         && rForm.controls['confirmPassword'].touched

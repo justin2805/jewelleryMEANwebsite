@@ -3,7 +3,6 @@ import { ContactUsService } from './services/contact-us.service';
 import { RegisterService } from './services/register.service';
 import { LoginService } from './services/login.service';
 import { CartService } from './services/cart.service';
-import { AuthService } from './auth/auth.service';
 import { ModuleWithProviders } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,7 +22,6 @@ import { ProductComponent } from './components/product/product.component';
 import { UserService } from './services/user.service';
 import { ProductsService } from './services/products.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ProductTokenAuthInterceptor } from './auth/product_token_auth.interceptor';
 import { LoginComponent } from './components/login/login.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
@@ -35,6 +33,8 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { ViewContactEntriesComponent } from './components/view-contact-entries/view-contact-entries.component';
 import { RequestStockComponent } from './components/request-stock/request-stock.component';
 import { ViewStockRequestsComponent } from './components/view-stock-requests/view-stock-requests.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { UnAuthorizedComponent } from './components/un-authorized/un-authorized.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -47,12 +47,13 @@ const appRoutes: Routes = [
   {path: 'contact_us', component: ContactUsComponent},
   {path: 'about_us', component: AboutUsComponent},
   {path: 'register', component:RegisterComponent},
+  {path: 'unauthorized', component: UnAuthorizedComponent},
   {path: 'cart', component:ShoppingCartComponent},
-  {path: 'add_product', component: AddProductComponent},
-  {path: 'view_contact_entries', component:ViewContactEntriesComponent},
-  {path: 'view_requested_stock_entries', component:ViewStockRequestsComponent},
+  {path: 'add_product', component: AddProductComponent, canActivate: [AuthGuardService]},
+  {path: 'view_contact_entries', component:ViewContactEntriesComponent, canActivate: [AuthGuardService]},
+  {path: 'view_requested_stock_entries', component:ViewStockRequestsComponent, canActivate: [AuthGuardService]},
   {path: 'request_stock/:name/:productId',component:RequestStockComponent},
-  {path: 'edit_product/:prod_id', component: EditProductComponent},
+  {path: 'edit_product/:prod_id', component: EditProductComponent, canActivate: [AuthGuardService]},
   {path: '**', component: NotFoundComponent}
 ];
 
@@ -84,7 +85,8 @@ const appRoutes: Routes = [
     ShoppingCartComponent,
     ViewContactEntriesComponent,
     RequestStockComponent,
-    ViewStockRequestsComponent
+    ViewStockRequestsComponent,
+    UnAuthorizedComponent
     ],
   providers: [
     UserService,
@@ -95,12 +97,7 @@ const appRoutes: Routes = [
     ContactUsService,
     RequestStockService,
     HttpClientModule,
-    AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ProductTokenAuthInterceptor,
-      multi: true
-    }
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

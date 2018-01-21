@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   password:string;
   private credentials;
   
-  constructor(private fb: FormBuilder, private login: LoginService) { 
+  constructor(private fb: FormBuilder, private loginService: LoginService) { 
     this.rForm = fb.group({
       'email': [null, Validators.compose(
         [Validators.required, Validators.email]
@@ -28,11 +28,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
      
   }
-
-  log(x) {console.log(x);}
   
 
   onSubmit(form){
+    localStorage.setItem('id_token', "");
+    localStorage.setItem('saireni_isAdmin', "");
+    
     this.email = form.email;
     this.password = form.password;
     this.credentials = {
@@ -40,7 +41,18 @@ export class LoginComponent implements OnInit {
       password: this.password
     }
 
-    console.log(this.credentials);
-    this.login.login(this.credentials);
+    this.loginService.login(this.credentials).subscribe( 
+      // We're assuming the response will be an object
+      // with the JWT on an id_token key
+      data => {
+        localStorage.setItem('id_token', data.token);
+        localStorage.setItem('saireni_isAdmin', data.usertype);
+        this.rForm.reset();
+        window.location.reload();
+      },
+      error => {
+        console.log(error);
+      }
+    );  
   }
 }

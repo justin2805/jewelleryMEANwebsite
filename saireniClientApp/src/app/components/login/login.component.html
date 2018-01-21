@@ -8,7 +8,7 @@
         <div class="alert alert-danger" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">This field is required and requires a valid email id.</div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="text" class="form-control span3" name="password" placeholder="Enter your password" formControlName="password">
+            <input type="password" class="form-control span3" name="password" placeholder="Enter your password" formControlName="password">
         </div>
         <div class="alert alert-danger" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">This field is required.</div>
         <input type="submit" value="Login" [disabled]=!rForm.valid
