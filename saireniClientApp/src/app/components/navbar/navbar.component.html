@@ -47,15 +47,18 @@
         </li>
         <li class="divider"></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login/SignUp
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user_name}}
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li>
+            <li *ngIf="!isLoggedIn">
               <a routerLink="/login" routerLinkActive="active current">Login</a>
             </li>
-            <li>
+            <li *ngIf="!isLoggedIn">
                 <a routerLink="/register" routerLinkActive="active current">Sign up</a>
+              </li>
+              <li *ngIf="isLoggedIn">
+                <a routerLink="/logout" routerLinkActive="active current">Logout</a>
               </li>
           </ul>
         </li>
@@ -71,9 +74,9 @@
             <li>
               <a routerLink="/add_product" routerLinkActive="active current">Add Product</a>
             </li>
-            <li>
+            <!-- <li>
               <a routerLink="/edit_product/:prod_id" routerLinkActive="active current">Edit/Delete Product</a>
-            </li>
+            </li> -->
             <li class="divider"></li>
             <li>
               <a routerLink="/view_contact_entries" routerLinkActive="active current">View Contact Entries</a>

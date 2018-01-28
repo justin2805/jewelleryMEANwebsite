@@ -10,8 +10,16 @@
 	text-align: center;
 }
 .submit_btn{
-	width: 100%;
+	width: 45%;
 	height: 60px;
+	display: inline-block;
+}
+
+.delete_btn{
+	width: 45%;
+	margin-left: 9%;
+	height: 60px;
+	display: inline-block;
 }
 
 .alert {

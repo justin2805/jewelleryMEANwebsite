@@ -11,4 +11,5 @@ export class Products{
   quality: string;
   safety_info: string;
   legal_disclaimer: string;
+  myFile: any;
 }

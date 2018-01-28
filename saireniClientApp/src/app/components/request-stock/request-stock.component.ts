@@ -3,6 +3,7 @@ import { RequestStock } from './../../Entities/reqStock.entities';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { RequestStockService } from '../../services/request-stock.service';
+import { VALID } from '@angular/forms/src/model';
 
 @Component({
   selector: 'app-request-stock',
@@ -16,6 +17,11 @@ export class RequestStockComponent implements OnInit {
   body: RequestStock = new RequestStock();
   id: number;
   name: string;
+  private user_phone: string;
+  private user_email: string;
+  private user_name: string;
+  private successMsg: string;
+  private errorMsg: string;
 
   constructor(private fb: FormBuilder, private reqService : RequestStockService, private route: ActivatedRoute) {
     this.rForm = fb.group({
@@ -25,7 +31,7 @@ export class RequestStockComponent implements OnInit {
       )],
       'mobileNumber': [null, Validators.required],
       'subject':[null],
-      'message': [null, Validators.required],
+      'message': [null],
       'productQtReqd': [null, Validators.required],
       'productId': [null],
       'productName': [null]
@@ -34,6 +40,13 @@ export class RequestStockComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.id = +params.get('productId');
       this.name = params.get('name');
+      this.user_email = localStorage.getItem('saireni_user_email');
+      this.user_name = localStorage.getItem('saireni_user_name');
+      this.user_phone = localStorage.getItem('saireni_user_phone');
+      this.rForm.controls['name'].setValue(this.user_name);
+      this.rForm.controls['email'].setValue(this.user_email);
+      this.rForm.controls['mobileNumber'].setValue(this.user_phone);
+
       console.log(params)
       console.log(this.id)
       console.log(this.name);
@@ -53,9 +66,16 @@ export class RequestStockComponent implements OnInit {
     this.body.prod_id = this.id;
     this.body.prod_name = this.name;
 
-    this.reqService.uploadStockRequest(this.body).subscribe((res)=>{
-      console.log(res)
+    this.reqService.uploadStockRequest(this.body).subscribe(
+      (res)=>{
+      console.log(res);
+      this.successMsg = "Your request has been sent for approval. We'll email you in event of further updates.";
+      this.errorMsg = "";
       this.rForm.reset();
+    }, (err)=> {
+      this.successMsg = "";
+      this.errorMsg = "We could not process your request due to some technical issues. Please try again";
+      console.log(err)
     })
   }
 }

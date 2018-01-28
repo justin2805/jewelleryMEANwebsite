@@ -43,7 +43,12 @@ exports.sign_in = function (req, res) {
                 return res.status(200).json({
                     token: jwt.sign(
                         { email: user.email, name: user.name, userId: user.userId },
-                        process.env.JWT_SECRET_KEY), usertype: user.usertype
+                        process.env.JWT_SECRET_KEY), 
+                        name: user.name,
+                        phone: user.phone,
+                        email: user.email,
+                        address: user.email,
+                        usertype: user.usertype
                 });
             }
         }
@@ -56,7 +61,6 @@ exports.sign_in = function (req, res) {
 // might need to validate the usertype, either here or in another method
 exports.loginRequired = function (req, res, next) {
     if (req.user) {
-        console.log(req.user)
         next();
     } else {
         return res.status(401).json({ message: 'Unauthorized user!' });

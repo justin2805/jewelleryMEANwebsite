@@ -2,6 +2,7 @@
 module.exports = function (app) {
   var productsController = require('../controllers/productsController');
   var userController = require('../controllers/userController');
+  var cors = require('cors');
 
   app.route('/products')
     .get(productsController.fetchAllProducts)

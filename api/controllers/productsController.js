@@ -22,7 +22,6 @@ var express = require('express'),
 exports.fetchAllProducts = function (req, res) {
     var url_parts = url.parse(req.url, true);
     var query = url_parts.query;
-    console.log(query)
     var projection = '-_id';
     Products.find(query, projection, function (err, products) {
         if (err) {
@@ -140,45 +139,83 @@ exports.updateProduct = function (req, res) {
     var form = new formidable.IncomingForm();
     var query = { 'productId': req.params.productId };
 
-    var imageLocalFileNamePath, imageRemoteFileNamePath;
-    form.on('fileBegin', function (name, file) {
-        var extension = file.type;
-        extension = extension.split("/").pop();
-        file.path = path.join(__dirname + `/../../uploads/` + uuid.v4() + "." + extension);
-        imageFileNamePath = file.path;
-    });
-
-    form.on('file', function (name, file) {
-        console.log('Uploaded ' + imageFileNamePath);
-    });
-
-    if (imageLocalFileNamePath) {
-        cloudinary.uploader.upload(imageLocalFileNamePath, function (error, result) {
-            if (error) {
-                res.status(500).json({ message: "Internal server error" });
-                console.log(error);
-            }
-            console.log(result);
-            if (result && result.url) imageRemoteFileNamePath = result.url;
-        });
-    }
+    var imageRemoteFileNamePath, imageFileNamePath, prodFields;
 
     form.parse(req, (err, fields, files) => {
+        prodFields = fields;
+    });
 
-        if (imageFileNamePath) {
-            fields.product_imagePaths[0] = imageFileNamePath;
-        }
+    let updateProdsPromise = new Promise(function (resolve, reject) {
+        form.on('fileBegin', function (name, file) {
+            var extension = file.type;
+            extension = extension.split("/").pop();
+            file.path = path.join(__dirname + `/../../uploads/` + uuid.v4() + "." + extension);
+            imageFileNamePath = file.path;
+            console.log("imgFileNamePath : " + imageFileNamePath);
+        });
+
+        form.on('file', function (name, file) {
+            console.log('imageFileNamePath : ' + imageFileNamePath);
+            if (imageFileNamePath) {
+                cloudinary.uploader.upload(imageFileNamePath, function (result) {
+                    if (result && result.url) {
+                        imageRemoteFileNamePath = result.url;
+                        prodFields.product_imagePaths[0] = imageRemoteFileNamePath;
+
+                        // delete image from local storage when image is uploaded to server
+                        // wont be triggered if user has not uploaded an image in the request
+                        fs.unlink(imageFileNamePath, function (err) {
+                            console.log('02')
+                            if (err) {
+                                console.log(err);
+                            }
+                            resolve();
+                        });
+                    } else {
+                        resolve();
+                    }
+                });
+            } else {
+                resolve();
+            }
+        });
+    });
+
+    updateProdsPromise.then(function () {
         // return old object after successful query completion for use in fs.unlink
-        Products.findOneAndUpdate(query, fields, { new: false }, function (err, product) {
+        Products.findOneAndUpdate(query, prodFields, { new: false }, function (err, product) {
             if (err) {
                 res.status(500).json({ message: "Internal server error" });
                 console.log(err);
             }
+            console.log('updated in db');
             // if a new image was added, delete the old image file since the old imagepath 
             // is replaced with the new path
             if (imageRemoteFileNamePath) {
+                console.log('imageRemoteFileNamePath : ' + imageRemoteFileNamePath);
                 cloudinary.uploader.destroy(product.product_imagePaths[0],
                     function (result) {
+                        console.log('deleted from dloudinary');
+                        console.log(result)
+                    });
+            }
+            res.status(200).json(product);
+        });
+    }).catch(function () {
+        // return old object after successful query completion for use in fs.unlink
+        Products.findOneAndUpdate(query, prodFields, { new: false }, function (err, product) {
+            if (err) {
+                res.status(500).json({ message: "Internal server error" });
+                console.log(err);
+            }
+            console.log('updated in db');
+            // if a new image was added, delete the old image file since the old imagepath 
+            // is replaced with the new path
+            if (imageRemoteFileNamePath) {
+                console.log('imageRemoteFileNamePath : ' + imageRemoteFileNamePath);
+                cloudinary.uploader.destroy(product.product_imagePaths[0],
+                    function (result) {
+                        console.log('deleted from dloudinary');
                         console.log(result)
                     });
             }
@@ -194,13 +231,33 @@ exports.updateProduct = function (req, res) {
  * @param {*} res 
  */
 exports.deleteProduct = function (req, res) {
-    Products.remove({ 'productId': req.params.productId },
-        function (err, product) {
-            if (err) {
-                res.status(500).json({ message: "Internal server error" });
-                console.log(err);
+    let prod;
+    let deleteImagePromise = new Promise(function (resolve, reject) {
+        Products.findOneAndRemove({ 'productId': req.params.productId },
+            function (err, product) {
+                if (err) {
+                    reject();
+                    // res.status(500).json({ message: "Internal server error" });
+                    console.log(err);
+                }
+                prod = product;
+                resolve();
+                // res.status(200).json({ message: "Product deleted" });
             }
-            res.status(200).json({ message: "Product deleted" });
+        )
+    });
+
+    deleteImagePromise.then(function () {
+        if (prod != null && prod.product_imagePaths[0] !== null) {
+            console.log('not null')
+            cloudinary.uploader.destroy(prod.product_imagePaths[0],
+                function (result) {
+                    console.log(result)
+                    res.status(200).json({ message: "Product deleted" });
+                });
         }
-    )
+    }).catch(function () {
+        res.status(500).json({ message: "Internal server error" });
+    });
+
 }

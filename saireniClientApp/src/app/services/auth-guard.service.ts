@@ -11,10 +11,8 @@ export class AuthGuardService implements CanActivate {
   canActivate() {
     if(this.login.loggedIn()) {
       if(this.login.isAdmin()) {
-        console.log('11')
         return true;
       } else {
-        console.log('12');
         this.router.navigateByUrl('/unauthorized');
         return false;
       }

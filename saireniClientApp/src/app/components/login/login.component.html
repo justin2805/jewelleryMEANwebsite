@@ -11,6 +11,10 @@
             <input type="password" class="form-control span3" name="password" placeholder="Enter your password" formControlName="password">
         </div>
         <div class="alert alert-danger" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">This field is required.</div>
+        
+        <div *ngIf="successMessage" class="alert alert-success">{{successMessage}}</div>
+        <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+
         <input type="submit" value="Login" [disabled]=!rForm.valid
         class="btn btn-primary submit_btn">
         <div class="notifyReg">Don't have an account? <b><a routerLink="/register">Register</a></b></div>

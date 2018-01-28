@@ -1,3 +1,5 @@
+import { SaireniAuthInterceptor } from './services/saireni.interceptor';
+import { LogoutComponent } from './components/logout/logout.component';
 import { RequestStockService } from './services/request-stock.service';
 import { ContactUsService } from './services/contact-us.service';
 import { RegisterService } from './services/register.service';
@@ -49,6 +51,7 @@ const appRoutes: Routes = [
   {path: 'register', component:RegisterComponent},
   {path: 'unauthorized', component: UnAuthorizedComponent},
   {path: 'cart', component:ShoppingCartComponent},
+  {path: 'logout', component: LogoutComponent},
   {path: 'add_product', component: AddProductComponent, canActivate: [AuthGuardService]},
   {path: 'view_contact_entries', component:ViewContactEntriesComponent, canActivate: [AuthGuardService]},
   {path: 'view_requested_stock_entries', component:ViewStockRequestsComponent, canActivate: [AuthGuardService]},
@@ -86,7 +89,8 @@ const appRoutes: Routes = [
     ViewContactEntriesComponent,
     RequestStockComponent,
     ViewStockRequestsComponent,
-    UnAuthorizedComponent
+    UnAuthorizedComponent,
+    LogoutComponent
     ],
   providers: [
     UserService,
@@ -97,7 +101,12 @@ const appRoutes: Routes = [
     ContactUsService,
     RequestStockService,
     HttpClientModule,
-    AuthGuardService
+    AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SaireniAuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

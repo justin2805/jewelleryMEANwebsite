@@ -17,7 +17,7 @@ export class LoginService {
   }
 
   isAdmin() {
-    const isAdmin = localStorage.getItem('saireni_isAdmin');
+    const isAdmin = localStorage.getItem('saireni_user_type');
     if (isAdmin == null) {
       return false;
     }

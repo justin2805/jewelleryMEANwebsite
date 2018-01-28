@@ -16,6 +16,8 @@ export class NavbarComponent implements OnInit {
   public shoppingCartItems$: Observable<Products[]> = of([]);
   public shoppingCartItems: Products[] = [];
   private isAdmin: boolean = false;
+  private isLoggedIn: boolean = false;
+  private user_name:string = 'Login/Sign up';
 
   constructor(private cartService: CartService, private loginsService: LoginService) {
     this.shoppingCartItems$ = this.cartService.getItems();
@@ -28,6 +30,11 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.isAdmin = this.loginsService.isAdmin();
+    this.isLoggedIn = this.loginsService.loggedIn();
+    this.user_name = localStorage.getItem('saireni_user_name');
+    if(this.user_name === null || this.user_name === "") {
+      this.user_name = "Login/Sign up";
+    }
 
 
     // this.shoppingCartItems$ = this.cartService.getItems();

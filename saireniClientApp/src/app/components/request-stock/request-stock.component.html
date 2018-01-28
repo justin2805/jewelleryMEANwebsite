@@ -3,19 +3,19 @@
         <h1>Request Stock</h1>
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control span3" name="name" placeholder="Enter your name" formControlName="name">
+            <input type="text" class="form-control span3" name="name" placeholder="Enter your name" formControlName="name" value="{{user_name}}">
         </div>
         <div class="alert alert-danger" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">This field is required.</div>
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control span3" name="email" placeholder="Enter your email id" formControlName="email">
+            <input type="email" class="form-control span3" name="email" placeholder="Enter your email id" formControlName="email" value="{{user_email}}">
         </div>
         <div class="alert alert-danger" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">This field is required and must provide a valid email id.</div>
 
         <div class="form-group">
             <label for="mobileNumber">Mobile Number</label>
-            <input type="number" class="form-control span3" name="mobileNumber" placeholder="Enter your mobile number" formControlName="mobileNumber">
+            <input type="number" class="form-control span3" name="mobileNumber" placeholder="Enter your mobile number" formControlName="mobileNumber" value="{{user_phone}}">
         </div>
         <div class="alert alert-danger" *ngIf="!rForm.controls['mobileNumber'].valid && rForm.controls['mobileNumber'].touched">This field is required.</div>
 
@@ -40,14 +40,15 @@
         <div class="form-group">
             <label for="subject">Subject</label>
             <input type="text" class="form-control span3" name="subject" placeholder="Enter the subject(optional)" formControlName="subject">
-        </div>
+        </div> 
 
         <div class="form-group">
             <label for="message">Message</label>
             <textarea id="address" rows="4" type="text" class="form-control span3" name="message" placeholder="Enter message(optional)" formControlName="message"></textarea>
         </div>
-        <div class="alert alert-danger" *ngIf="!rForm.controls['message'].valid && rForm.controls['message'].touched">This field is required.</div>
 
+        <div class="alert alert-success"  *ngIf="successMsg">{{successMsg}}</div>
+        <div class="alert alert-success"  *ngIf="errorMsg">{{errorMsg}}</div>
         <input type="submit" value="Submit" [disabled]=!rForm.valid class="btn btn-primary submit_btn">
     </form>
 </body>

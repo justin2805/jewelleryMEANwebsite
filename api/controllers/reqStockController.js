@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 exports.fetchDetails = function(req,res) {
     var projection = '-_id -__v';
-    RequestStock.find({},projection,function(err,reqStock) {
+    RequestStock.find({},projection,{sort:{'sent_date':-1}},function(err,reqStock) {
         if(err) {
             res.status(500).json({message:"Internal server error"});
             console.log(err);
