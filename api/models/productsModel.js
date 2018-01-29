@@ -31,6 +31,9 @@ var productsSchema = new Schema({
   cost: {
       type: Number
   },
+  quantity: {
+    type: Number
+  },
   productType: {
     type: String,
     enum: ['JEWELLERY', 'MOBILE CASE', 'ACCESSORIES','OTHERS'],

@@ -42,7 +42,8 @@ exports.sign_in = function (req, res) {
             } else {
                 return res.status(200).json({
                     token: jwt.sign(
-                        { email: user.email, name: user.name, userId: user.userId },
+                        { email: user.email, name: user.name, userId: user.userId, 
+                            usertype: user.usertype },
                         process.env.JWT_SECRET_KEY), 
                         name: user.name,
                         phone: user.phone,

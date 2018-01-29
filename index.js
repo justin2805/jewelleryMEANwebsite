@@ -11,6 +11,7 @@ var User = require('./api/models/usersModel'),
   ContactUs = require('./api/models/contactUsModel'),
   Products = require('./api/models/productsModel'),
   ReqStock = require('./api/models/reqStockModel'),
+  Cart = require('./api/models/cartModel'),
   cors = require('cors');
 
 var port = process.env.PORT || 3000;
@@ -79,10 +80,12 @@ var userRoutes = require('./api/routes/userRoutes');
 var contactUsRoutes = require('./api/routes/contactUsRoutes');
 var productsRoutes = require('./api/routes/productsRoutes');
 var reqStockRoutes = require('./api/routes/reqStockRoutes');
+var cartRoutes = require('./api/routes/cartRoutes');
 userRoutes(app);
 contactUsRoutes(app);
 productsRoutes(app);
 reqStockRoutes(app);
+cartRoutes(app);
 
 
 app.listen(port, function () {

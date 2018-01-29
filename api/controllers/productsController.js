@@ -261,3 +261,44 @@ exports.deleteProduct = function (req, res) {
     });
 
 }
+
+
+exports.updateProductCollectionForCartProcess = function (req, res, next) {
+    var orderFields;
+    var query;
+    console.log('req.user =>');
+    console.log(req.user);
+    console.log('req.body.userId =>');
+    console.log(req.body.userId);
+    console.log(req.user.usertype)
+    if (req.user.usertype === 'ADMIN') {
+        var len = req.body.order.length;
+        console.log('looping for len : '+len);
+        for (index = 0; index < len; index++) {
+            query = null;
+            orderFields = null;
+            query = { 'productId': req.body.order[index].productId };
+            orderFields = { $inc :{'quantity' : -req.body.order[index].prod_ordered_qty}};
+            console.log('Iteration value of query  for Loop : '+index+" :: ");
+            console.log(query);
+            console.log('Iteration value of updateFields  for Loop : '+index+" :: ");
+            console.log(orderFields)
+            Products.findOneAndUpdate(query, orderFields, { new: false }, function (err, product) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({ message: "Internal server error" });
+                } else {
+                    // if (index = len - 1) {
+                    //     console.log('next triggered')
+                    //     next();
+                    // }
+                }
+                // res.status(200).json(product);
+            });
+            if (index = len - 1) {
+                console.log('next triggered')
+                next();
+            }
+        };
+    }
+}
