@@ -8,7 +8,8 @@ var express = require('express'),
     fs = require('fs'),
     url = require('url'),
     cloudinary = require('cloudinary'),
-    promise = require('promise');
+    promise = require('promise'),
+    async = require('async');
 
 /**
  * GET:
@@ -263,42 +264,65 @@ exports.deleteProduct = function (req, res) {
 }
 
 
-exports.updateProductCollectionForCartProcess = function (req, res, next) {
-    var orderFields;
-    var query;
-    console.log('req.user =>');
-    console.log(req.user);
-    console.log('req.body.userId =>');
-    console.log(req.body.userId);
-    console.log(req.user.usertype)
-    if (req.user.usertype === 'ADMIN') {
-        var len = req.body.order.length;
-        console.log('looping for len : '+len);
-        for (index = 0; index < len; index++) {
-            query = null;
-            orderFields = null;
-            query = { 'productId': req.body.order[index].productId };
-            orderFields = { $inc :{'quantity' : -req.body.order[index].prod_ordered_qty}};
-            console.log('Iteration value of query  for Loop : '+index+" :: ");
-            console.log(query);
-            console.log('Iteration value of updateFields  for Loop : '+index+" :: ");
-            console.log(orderFields)
-            Products.findOneAndUpdate(query, orderFields, { new: false }, function (err, product) {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({ message: "Internal server error" });
-                } else {
-                    // if (index = len - 1) {
-                    //     console.log('next triggered')
-                    //     next();
-                    // }
-                }
-                // res.status(200).json(product);
-            });
-            if (index = len - 1) {
-                console.log('next triggered')
-                next();
-            }
-        };
-    }
-}
+// exports.updateProductCollectionForCartProcess = function (req, res, next) {
+//     var orderFields;
+//     var query;
+//     if (req.user.usertype === 'ADMIN') {
+//         var len = req.body.order.length;
+//         console.log('looping for len : '+len);
+        
+//         var index = 0;
+//         async.series([
+//             function(done) {
+//                 Products.find(function(err,products){
+//                     async.each(products, function(product, callback){
+//                         var i = index;
+//                         if(product.productId === req.body.order[i].productId) {
+//                             product.quantity = product.quantity - 
+//                             req.body.order[i].prod_ordered_qty;
+//                             console.log(i+" : product.quantity : "+product.quantity)
+//                             product.save(callback);
+//                             index++;
+//                         }
+//                     })
+//                 },done)
+//             }
+//         ]), function allTaskCompleted() {
+//             console.log('done');
+//             next();
+//         }
+        
+        
+        
+        
+        // for (index = 0; index < len; index++) {
+        //     query = null;
+        //     orderFields = null;
+        //     query = { 'productId': req.body.order[index].productId };
+        //     orderFields = { $inc :{'quantity' : -req.body.order[index].prod_ordered_qty}};
+        //     console.log("Iteration at : "+index);
+        //     console.log(query);
+        //     console.log(orderFields)
+        //     Products.findOneAndUpdate(query, orderFields, { new: false }, function (err, product) {
+        //         if (err) {
+        //             console.log(err);
+        //             res.status(500).json({ message: "Internal server error" });
+        //         } else {
+        //             // if (index = len - 1) {
+        //             //     console.log('next triggered')
+        //             //     next();
+        //             // }
+        //             if (index = len - 1) {
+        //                 console.log('next triggered: index :: '+index+" :: len :: "+len)
+        //                 next();
+        //             }
+        //         }
+        //         // res.status(200).json(product);
+        //     });
+        //     // if (index = len - 1) {
+        //     //     console.log('next triggered: index :: '+index+" :: len :: "+len)
+        //     //     next();
+        //     // }
+        // };
+//     }
+// }

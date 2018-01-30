@@ -23,14 +23,10 @@ exports.fetchAllOrders = function (req, res) {
     // var url_parts = url.parse(req.url, true);
     // var query = url_parts.query;
     var query;
-    console.log('req.user =>');
-    console.log(req.user);
-    console.log('req.body.userId =>');
-    console.log(req.body.userId);
     if (req.user.usertype === 'ADMIN') {
         query = {};
     } else {
-        query = { 'userId': req.body.userId };
+        query = { 'userId': req.user.userId };
     }
     var projection = '-_id';
     Cart.find(query, projection, function (err, cart) {
@@ -83,8 +79,6 @@ exports.fetchSingleOrder = function (req, res) {
 exports.placeOrder = function (req, res) {
     // var query = {"reqStock":"about"};
     var cart = new Cart(req.body);
-    console.log('cart');
-    console.log(cart)
     cart.save(function (err, result) {
         if (err) {
             res.status(500).json({ message: "Internal server error" });
@@ -103,15 +97,11 @@ exports.placeOrder = function (req, res) {
 exports.updateOrder = function (req, res) {
     var orderFields = req.body;
     var query;
-    console.log('req.user =>');
-    console.log(req.user);
-    console.log('req.body.userId =>');
-    console.log(req.body.userId);
     if (req.user.usertype === 'ADMIN') {
         query = { 'orderId': req.body.orderId };
     } else {
         query = {
-            'userId': req.body.userId,
+            'userId': req.user.userId,
             'orderId': req.body.orderId
         };
     }

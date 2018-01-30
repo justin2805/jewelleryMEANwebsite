@@ -49,7 +49,8 @@ exports.sign_in = function (req, res) {
                         phone: user.phone,
                         email: user.email,
                         address: user.email,
-                        usertype: user.usertype
+                        usertype: user.usertype,
+                        userId: user.userId
                 });
             }
         }

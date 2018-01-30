@@ -25,9 +25,7 @@ cloudinary.config({
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-var db = mongoose.connect(process.env.DATABASE_NAME, {
-  useMongoClient: true
-});
+var db = mongoose.connect(process.env.DATABASE_NAME);
 
 // if not done, might trigger CORS-Cross Origin Request Sharing error in the browser
 app.use(function (req, res, next) {

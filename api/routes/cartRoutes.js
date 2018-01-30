@@ -7,8 +7,7 @@ module.exports = function (app) {
 
   app.route('/cart')
     .get(userController.loginRequired, cartController.fetchAllOrders)
-    .post(userController.loginRequired, productsController.updateProductCollectionForCartProcess, 
-        cartController.placeOrder);
+    .post(userController.loginRequired, cartController.placeOrder);
 
   app.route('/cart/:orderId')
     .get(userController.loginRequired, cartController.fetchSingleOrder)
