@@ -26,6 +26,10 @@ var cartSchema = new Schema({
       type: String,
       required: true
   },
+  total_cost:{
+      type: Number,
+      required:true
+  },
   order: [{
     productId: {
         type: Number,
@@ -50,13 +54,17 @@ var cartSchema = new Schema({
   }],
   order_status: {
     type: String,
-    enum: ['ORDER_RECEIVED', 'ORDER_PROCESSING','DELIVERY_IN_PROGRESS',
+    enum: ['ORDER_RECEIVED', 'PAYMENT_PROCESSING','PAYMENT_RECEIVED',
+    'ORDER_PROCESSING','DELIVERY_IN_PROGRESS', 'PAYMENT_NOT_RECEIVED',
     'ORDER_DELIVERED','ORDER_CANCELLED','ORDER_FAILED','NO_PROGRESS'],
     default: ['NO_PROGRESS']
   },
   order_comments: {
       type: String,
       required: false
+  },
+  payment_reference_no: {
+      type: String
   },
   ordered_date: {
     type: Date,

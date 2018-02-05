@@ -29,7 +29,7 @@ exports.fetchAllOrders = function (req, res) {
         query = { 'userId': req.user.userId };
     }
     var projection = '-_id';
-    Cart.find(query, projection, function (err, cart) {
+    Cart.find(query, projection, {sort:{'ordered_date':-1}},function (err, cart) {
         if (err) {
             res.status(500).json({ message: "Internal server error" });
             console.log(err);
@@ -98,15 +98,14 @@ exports.updateOrder = function (req, res) {
     var orderFields = req.body;
     var query;
     if (req.user.usertype === 'ADMIN') {
-        query = { 'orderId': req.body.orderId };
+        console.log('Admin')
+        query = { 'orderId': req.params.orderId };
     } else {
         query = {
             'userId': req.user.userId,
-            'orderId': req.body.orderId
+            'orderId': req.params.orderId
         };
     }
-    console.log('orderFields');
-    console.log(orderFields);
     Cart.findOneAndUpdate(query, orderFields, { new: false }, function (err, cart) {
         if (err) {
             res.status(500).json({ message: "Internal server error" });

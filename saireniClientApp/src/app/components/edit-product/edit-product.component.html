@@ -54,11 +54,11 @@
         formControlName="legal_disclaimer" [(ngModel)]='originalProdVal.legal_disclaimer'></textarea>
     </div>
     <div class="form-group">
-      <input type="file" name="student_img" required (change)="fileChange(input)" #input />
+      <input type="file" name="student_img" (change)="onFileChange($event)" #input />
     </div>
-    <div>
+    <!-- <div>
       <img [attr.src]='file_srcs[0]' alt="" />
-    </div>
+    </div> -->
 
     <div class="alert alert-success" *ngIf="successMsg">{{successMsg}}</div>
     <div class="alert alert-success" *ngIf="errorMsg">{{errorMsg}}</div>

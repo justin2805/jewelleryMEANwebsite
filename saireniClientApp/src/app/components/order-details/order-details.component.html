@@ -1,0 +1,128 @@
+<h1>View Order Details</h1>
+<table class="table container c1 table-bordered table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="col-sm-5">Details</th>
+      <th scope="col" class="col-sm-5">Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <label>User Id</label>
+      </td>
+      <td>{{order.userId}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>Name</label>
+      </td>
+      <td>{{order.name}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>Email</label>
+      </td>
+      <td>{{order.email}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>Mobile Number</label>
+      </td>
+      <td>{{order.mobileNo}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>Delivery Address</label>
+      </td>
+      <td>{{order.address}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>Total Cost</label>
+      </td>
+      <td>{{order.total_cost}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>Order Status</label>
+      </td>
+      <td>{{order.order_status}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>Order Comments</label>
+      </td>
+      <td>{{order.order_comments}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>User's Payment Reference Number</label>
+      </td>
+      <td>{{order.payment_reference_no}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label>Ordered Date</label>
+      </td>
+      <td>{{order.ordered_date}}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+<h2>Ordered Products List</h2>
+<table class="table container c1 table-bordered table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="col-sm-1">Id</th>
+      <th scope="col" class="col-sm-4">Name</th>
+      <th scope="col" class="col-sm-2">Ordered Quantity</th>
+      <th scope="col" class="col-sm-2">Cost</th>
+      <th scope="col" class="col-sm-2">Cost Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let orderObj of orderArray">
+      <td>{{orderObj.productId}}</td>
+      <td>{{orderObj.prod_name}}</td>
+      <td>{{orderObj.prod_ordered_qty}}</td>
+      <td>{{orderObj.prod_cost}}</td>
+      <td>{{orderObj.prod_cost_total}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<body>
+  <form [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)" class="container">
+    <h1>Edit Values</h1>
+    <div class="form-group" *ngIf="!isAdmin">
+      <label for="ref_no">Payment Reference Number</label>
+      <input type="text" class="form-control span3" name="ref_no" placeholder="Enter your payment reference number" formControlName="ref_no">
+    </div>
+    <div class="alert alert-danger" *ngIf="!rForm.controls['ref_no'].valid && rForm.controls['ref_no'].touched">This field is required.</div>
+
+    <div class="form-group" *ngIf="isAdmin">
+      <label for="comments">Order Comments</label>
+      <input type="text" class="form-control span3" name="comments" placeholder="Enter any comments for the order" formControlName="comments">
+    </div>
+
+    <div class="form-group" *ngIf="isAdmin">
+      <label for="order_status">Order Status</label>
+      <select #prodQtyDropdown>
+          <option>{{order.order_status}}</option>
+          <option class="form-control" 
+      (click)="orderStatusChanged(item)"
+      *ngFor="let item of createRange()">{{item}}</option>
+  </select>
+    </div>
+
+    <div class="alert alert-success" *ngIf="successMsg">{{successMsg}}</div>
+    <div class="alert alert-danger" *ngIf="errorMsg">{{errorMsg}}</div>
+    <div>
+      <input type="submit" value="Submit" [disabled]=!rForm.valid class="btn btn-primary submit_btn">
+
+    </div>
+  </form>
+</body>

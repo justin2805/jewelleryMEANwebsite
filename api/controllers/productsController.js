@@ -9,7 +9,8 @@ var express = require('express'),
     url = require('url'),
     cloudinary = require('cloudinary'),
     promise = require('promise'),
-    async = require('async');
+    async = require('async'),
+    util = require('util');
 
 /**
  * GET:
@@ -143,7 +144,34 @@ exports.updateProduct = function (req, res) {
     var imageRemoteFileNamePath, imageFileNamePath, prodFields;
 
     form.parse(req, (err, fields, files) => {
-        prodFields = fields;
+        prodFields = new Products(fields);
+        console.log(util.inspect({fields:fields, files:files}))
+        if(files !== null && files.myFile !== undefined && files.myFile.size !== undefined) {
+            
+        } else {
+            prodFields = prodFields.toObject();
+            delete prodFields["_id"];
+            delete prodFields["product_imagePaths"];
+            // return old object after successful query completion for use in fs.unlink
+            Products.findOneAndUpdate(query, prodFields, { new: false }, function (err, product) {
+                if (err) {
+                    res.status(500).json({ message: "Internal server error" });
+                    console.log(err);
+                }
+                console.log('updated in db');
+                // if a new image was added, delete the old image file since the old imagepath 
+                // is replaced with the new path
+                if (imageRemoteFileNamePath) {
+                    console.log('imageRemoteFileNamePath : ' + imageRemoteFileNamePath);
+                    cloudinary.uploader.destroy(product.product_imagePaths[0],
+                        function (result) {
+                            console.log('deleted from dloudinary');
+                            console.log(result)
+                        });
+                }
+                res.status(200).json(product);
+            });   
+        }
     });
 
     let updateProdsPromise = new Promise(function (resolve, reject) {
@@ -152,11 +180,9 @@ exports.updateProduct = function (req, res) {
             extension = extension.split("/").pop();
             file.path = path.join(__dirname + `/../../uploads/` + uuid.v4() + "." + extension);
             imageFileNamePath = file.path;
-            console.log("imgFileNamePath : " + imageFileNamePath);
         });
 
         form.on('file', function (name, file) {
-            console.log('imageFileNamePath : ' + imageFileNamePath);
             if (imageFileNamePath) {
                 cloudinary.uploader.upload(imageFileNamePath, function (result) {
                     if (result && result.url) {
@@ -183,6 +209,8 @@ exports.updateProduct = function (req, res) {
     });
 
     updateProdsPromise.then(function () {
+        prodFields = prodFields.toObject();
+        delete prodFields["_id"];
         // return old object after successful query completion for use in fs.unlink
         Products.findOneAndUpdate(query, prodFields, { new: false }, function (err, product) {
             if (err) {

@@ -41,16 +41,19 @@ export class ProductsService {
     //  headers.append('Content-Type','multipart/form-data');
      let opts = new RequestOptions({headers:headers});
     //  console.log(opts)
+    console.log(body.get('myFile'))
+
      return this.http.post('http://192.168.1.103:3001/products',body,opts).map(res=> res.json());
    }
-
+ 
    updateProducts(body:FormData, productId: number) {
     let headers = new Headers();
     headers.append('Authorization','JWT '+localStorage.getItem('id_token'));
    //  headers.append('Content-Type','multipart/form-data');
     let opts = new RequestOptions({headers:headers});
    //  console.log(opts)
-    return this.http.put(`http://192.168.1.103:3001/products/${productId}`,body,opts).map(res=> res.json());
+   console.log(body.get('myFile'))
+   return this.http.put(`http://192.168.1.103:3001/products/${productId}`,body,opts).map(res=> res.json());
   }
 
 

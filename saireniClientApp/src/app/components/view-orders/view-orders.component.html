@@ -1,0 +1,30 @@
+<h1>View Orders</h1>
+<table class="table container table-bordered table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="col-sm-1">Order Id</th>
+      <th scope="col" class="col-sm-1">User Id</th>
+      <th scope="col" class="col-sm-3">Name</th>
+      <th scope="col" class="col-sm-3">Email</th>
+      <th scope="col" class="col-sm-3">Contact Number</th>
+      <th scope="col" class="col-sm-3">Address</th>
+      <th scope="col" class="col-sm-5">Ordered Date</th>
+      <th scope="col" class="col-sm-3">Status</th>
+      <th scope="col" class="col-sm-3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <!-- <th scope="row">{{contact.entryId}}</th> -->
+      <td>{{order.orderId}}</td>
+      <td>{{order.userId}}</td>
+      <td>{{order.name}}</td>
+      <td>{{order.email}}</td>
+      <td>{{order.mobileNo}}</td>
+      <td>{{order.address}}</td>
+      <td>{{order.ordered_date}}</td>
+      <td>{{order.order_status}}</td>
+      <td class="btn-primary" [routerLink]="['/order_details',order.orderId]">Details</td>
+    </tr>
+  </tbody>
+</table>

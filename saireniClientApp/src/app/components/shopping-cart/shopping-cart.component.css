@@ -1,6 +1,13 @@
 .container{
     margin-top: 5%;
 }
+.c11 {
+    margin-top: 4%;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-bottom: 2%;
+	width: 40%;
+}
 
 img.product-image {
     max-height: 100%;

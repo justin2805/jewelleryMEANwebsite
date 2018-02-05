@@ -46,32 +46,33 @@
                         <td>   </td>
                         <td>   </td>
                         <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>$24.59</strong></h5></td>
+                        <td class="text-right"><h5><strong>₹{{totalCost}}</strong></h5></td>
                     </tr>
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
                         <td><h5>Estimated shipping</h5></td>
-                        <td class="text-right"><h5><strong>$6.94</strong></h5></td>
+                        <td class="text-right"><h5><strong>₹{{estimatedShippingCost}}</strong></h5></td>
                     </tr>
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
                         <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>$31.53</strong></h3></td>
+                        <td class="text-right"><h3><strong>₹{{totalCost+estimatedShippingCost}}</strong></h3></td>
                     </tr>
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
                         <td>
-                        <button type="button" class="btn btn-default">
+                        <button type="button" class="btn btn-default" 
+                        [routerLink]="['/jewelleries']">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                         </button></td>
                         <td>
-                        <button type="button" class="btn btn-success">
+                        <button type="button" class="btn btn-success" (click)="placeOrder()">
                             Checkout <span class="glyphicon glyphicon-play"></span>
                         </button></td>
                     </tr>
@@ -79,6 +80,45 @@
             </table>
         </div>
     </div>
+</div>
+<div class="c11" *ngIf=placeOrderClicked>
+    <div class="well well-sm">
+        <strong>User Mailing Details</strong>
+    </div>
+    <form [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)">
+    <div class="form-group">
+        <label for="name">User Name</label>
+        <input type="text" class="form-control span3" name="name" placeholder="Enter your name"
+        [(ngModel)]='name' formControlName="name" value="{{name}}">
+      </div>
+      <div class="alert alert-danger" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">This field is required.</div>
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control span3" name="email" placeholder="Enter your email"
+          [(ngModel)]='email' formControlName="email" value="{{email}}">
+          <div class="alert alert-danger" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">This field is required and must be valid.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Contact Number</label>
+        <input type="phone" class="form-control span3" name="phone" placeholder="Enter your phone"
+          [(ngModel)]='phone' formControlName="phone" value="{{phone}}">
+          <div class="alert alert-danger" *ngIf="!rForm.controls['phone'].valid && rForm.controls['phone'].touched">This field is required and must be valid.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <textarea id="address" rows="4" type="text" class="form-control span3" name="address" placeholder="Enter your address"
+          [(ngModel)]='address' formControlName="address">{{address}}</textarea>
+          <div class="alert alert-danger" *ngIf="!rForm.controls['address'].valid && rForm.controls['address'].touched">This field is required.</div>
+      </div>
+      <div class="alert alert-success" *ngIf="successMsg">{{successMsg}}</div>
+    <div class="alert alert-success" *ngIf="errorMsg">{{errorMsg}}</div>
+    <div>
+      <input type="submit" value="Place Order" [disabled]=!rForm.valid class="btn btn-primary submit_btn">
+      </div>
+    </form>
 </div>
   <!-- <ul id="products" class="row list-group">
       <li class="item  col-xs-4 col-lg-4" *ngFor="let product of products">

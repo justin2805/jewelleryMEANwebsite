@@ -55,8 +55,6 @@ export class EditProductComponent implements OnInit {
         this.rForm.controls['safety_info'].setValue(this.originalProdVal.safety_info);
         this.rForm.controls['legal_disclaimer'].setValue(this.originalProdVal.legal_disclaimer);
 
-        console.log(res)
-        console.log(this.originalProdVal)
       })
     }
   }
@@ -85,7 +83,6 @@ export class EditProductComponent implements OnInit {
     // console.log(this.body);
     this.productsservice.updateProducts(this.formData,this.id).subscribe(
       (res) => {
-        console.log(res)
         this.successMsg = "Product upload Successful!";
         this.errorMsg = "";
         this.rForm.reset();

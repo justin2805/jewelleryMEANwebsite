@@ -31,7 +31,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-     
+    if(localStorage.getItem('saireni_user_id') !== '') {
+      this.router.navigate(['']);
+    } else {
+      
+    }
   }
   
 
@@ -42,6 +46,7 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('saireni_user_phone',"");
     localStorage.setItem('saireni_user_email',"");
     localStorage.setItem('saireni_user_address',"");
+    localStorage.setItem('saireni_user_id',"");
     
     this.email = form.email;
     this.password = form.password;
@@ -60,6 +65,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('saireni_user_phone',data.phone);
         localStorage.setItem('saireni_user_email',data.email);
         localStorage.setItem('saireni_user_address',data.address);
+        localStorage.setItem('saireni_user_id',data.userId);
         this.rForm.reset();
         this.successMessage = "Login Successful";
         this.errorMessage = "";

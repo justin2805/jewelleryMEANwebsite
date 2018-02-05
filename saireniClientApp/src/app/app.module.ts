@@ -1,3 +1,4 @@
+import { OrdersService } from './services/orders.service';
 import { SaireniAuthInterceptor } from './services/saireni.interceptor';
 import { LogoutComponent } from './components/logout/logout.component';
 import { RequestStockService } from './services/request-stock.service';
@@ -37,6 +38,8 @@ import { RequestStockComponent } from './components/request-stock/request-stock.
 import { ViewStockRequestsComponent } from './components/view-stock-requests/view-stock-requests.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { UnAuthorizedComponent } from './components/un-authorized/un-authorized.component';
+import { ViewOrdersComponent } from './components/view-orders/view-orders.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -53,8 +56,10 @@ const appRoutes: Routes = [
   {path: 'cart', component:ShoppingCartComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'add_product', component: AddProductComponent, canActivate: [AuthGuardService]},
+  {path: 'view_orders', component: ViewOrdersComponent},
   {path: 'view_contact_entries', component:ViewContactEntriesComponent, canActivate: [AuthGuardService]},
   {path: 'view_requested_stock_entries', component:ViewStockRequestsComponent, canActivate: [AuthGuardService]},
+  {path: 'order_details/:orderId', component: OrderDetailsComponent},
   {path: 'request_stock/:name/:productId',component:RequestStockComponent},
   {path: 'edit_product/:prod_id', component: EditProductComponent, canActivate: [AuthGuardService]},
   {path: '**', component: NotFoundComponent}
@@ -90,7 +95,9 @@ const appRoutes: Routes = [
     RequestStockComponent,
     ViewStockRequestsComponent,
     UnAuthorizedComponent,
-    LogoutComponent
+    LogoutComponent,
+    ViewOrdersComponent,
+    OrderDetailsComponent
     ],
   providers: [
     UserService,
@@ -101,6 +108,7 @@ const appRoutes: Routes = [
     ContactUsService,
     RequestStockService,
     HttpClientModule,
+    OrdersService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,
