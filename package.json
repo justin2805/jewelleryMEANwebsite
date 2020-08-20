@@ -15,7 +15,7 @@
   "homepage": "https://bitbucket.org/justin2805/s_aireni_jewellers_accessories#readme",
   "dependencies": {
     "async": "^2.6.0",
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^5.0.0",
     "body-parser": "*",
     "cloudinary": "^1.9.1",
     "cors": "*",
